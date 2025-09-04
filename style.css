@@ -1,0 +1,91 @@
+/* Estilos personalizados para el fondo espacial y mejoras visuales */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000411; /* Azul noche muy oscuro */
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Contenedor para las estrellas para que no interfieran con el contenido */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        /* Capas de estrellas para efecto parallax */
+        .stars, .stars2, .stars3 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: transparent;
+        }
+        
+        /* Animaciones */
+        @keyframes animStar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+
+        /* Usamos box-shadow para crear las estrellas. 
+           Estos valores son generados para simular el efecto aleatorio. */
+        .stars {
+            width: 1px;
+            height: 1px;
+            box-shadow: 
+                1879px 1211px #FFF, 1729px 1374px #FFF, 1151px 338px #FFF, 
+                56px 1663px #FFF, 1495px 1006px #FFF, 1243px 1568px #FFF;
+            animation: animStar 50s linear infinite;
+        }
+
+        .stars2 {
+            width: 2px;
+            height: 2px;
+            box-shadow: 
+                1694px 528px #FFF, 1373px 1827px #FFF, 129px 1278px #FFF, 
+                1184px 173px #FFF, 599px 127px #FFF, 1289px 428px #FFF;
+            animation: animStar 100s linear infinite;
+        }
+
+        .stars3 {
+            width: 3px;
+            height: 3px;
+            box-shadow: 
+                1708px 1013px #FFF, 1844px 197px #FFF, 799px 803px #FFF, 
+                105px 186px #FFF, 1029px 1095px #FFF, 1481px 1139px #FFF;
+            animation: animStar 150s linear infinite;
+        }
+        
+        /* Efecto de "glow" para las tarjetas y el título */
+        .card-glow {
+            border: 1px solid rgba(59, 130, 246, 0.5); /* Borde azul semi-transparente */
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3), 0 0 5px rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .card-glow:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 10px rgba(59, 130, 246, 0.4);
+        }
+        .title-glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(59, 130, 246, 0.7);
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        canvas:active {
+            cursor: grabbing;
+        }

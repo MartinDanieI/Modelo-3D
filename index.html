@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor 3D - Colección Galáctica</title>
+    
+    <!-- Tailwind CSS para el diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="min-h-screen">
+
+    <!-- Contenedor del fondo estrellado -->
+    <div class="stars-container">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="container mx-auto px-4 py-12 relative z-10">
+
+        <!-- Encabezado -->
+        <header class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-black uppercase title-glow tracking-widest">Colección Galáctica</h1>
+            <p class="text-lg md:text-xl text-blue-300 mt-4 max-w-2xl mx-auto">
+                Explora nuestros diseños exclusivos. Rota y acerca cada modelo para ver los detalles.
+            </p>
+        </header>
+
+        <!-- Grid de visualizadores 3D -->
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+            
+            <!-- Visor 1 -->
+            <div class="card-glow bg-black bg-opacity-40 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-center">
+                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
+                    <canvas id="canvas-1"></canvas>
+                </div>
+                <h2 class="text-2xl font-bold">Nebulosa V-01</h2>
+                <p class="text-blue-200">Diseño inspirado en la constelación de Orión.</p>
+            </div>
+
+            <!-- Visor 2 -->
+            <div class="card-glow bg-black bg-opacity-40 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-center">
+                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
+                    <canvas id="canvas-2"></canvas>
+                </div>
+                <h2 class="text-2xl font-bold">Astro-Génesis</h2>
+                <p class="text-blue-200">Un clásico con un toque cósmico.</p>
+            </div>
+
+            <!-- Visor 3 -->
+            <div class="card-glow bg-black bg-opacity-40 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-center">
+                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
+                    <canvas id="canvas-3"></canvas>
+                </div>
+                <h2 class="text-2xl font-bold">Agujero Negro</h2>
+                <p class="text-blue-200">Minimalista, elegante y misterioso.</p>
+            </div>
+
+            <!-- Visor 4 (Estos dos últimos se centrarán en pantallas grandes gracias al grid) -->
+            <div class="card-glow bg-black bg-opacity-40 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-center md:col-start-1 lg:col-start-auto">
+                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
+                    <canvas id="canvas-4"></canvas>
+                </div>
+                <h2 class="text-2xl font-bold">Supernova</h2>
+                <p class="text-blue-200">Una explosión de color y estilo.</p>
+            </div>
+
+            <!-- Visor 5 -->
+            <div class="card-glow bg-black bg-opacity-40 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-center">
+                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
+                    <canvas id="canvas-5"></canvas>
+                </div>
+                <h2 class="text-2xl font-bold">Materia Oscura</h2>
+                <p class="text-blue-200">Define tu presencia con poder.</p>
+            </div>
+            
+        </main>
+        
+    </div>
+
+    <!-- Three.js (Librería para 3D) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="script.js"></script>.
+
+</body>
+</html>
