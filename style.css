@@ -43,8 +43,23 @@
             width: 1px;
             height: 1px;
             box-shadow: 
+                /* Originales */
                 1879px 1211px #FFF, 1729px 1374px #FFF, 1151px 338px #FFF, 
-                56px 1663px #FFF, 1495px 1006px #FFF, 1243px 1568px #FFF;
+                56px 1663px #FFF, 1495px 1006px #FFF, 1243px 1568px #FFF,
+                /* Añadidas */
+                406px 735px #FFF, 1335px 686px #FFF, 67px 355px #FFF, 
+                156px 1774px #FFF, 1993px 1438px #FFF, 1421px 1199px #FFF, 
+                1289px 1272px #FFF, 153px 1302px #FFF, 1290px 45px #FFF, 
+                75px 827px #FFF, 1018px 233px #FFF, 151px 1081px #FFF, 
+                885px 1003px #FFF, 1318px 129px #FFF, 114px 1792px #FFF, 
+                1538px 1827px #FFF, 1022px 1426px #FFF, 1485px 1864px #FFF, 
+                1793px 801px #FFF, 1694px 1974px #FFF, 1974px 1475px #FFF, 
+                1495px 788px #FFF, 1374px 1907px #FFF, 1489px 74px #FFF, 
+                1059px 1290px #FFF, 91px 209px #FFF, 1581px 195px #FFF, 
+                1199px 1860px #FFF, 1311px 1709px #FFF, 1388px 174px #FFF, 
+                680px 1000px #FFF, 381px 1928px #FFF, 1898px 993px #FFF, 
+                1377px 621px #FFF, 1507px 1716px #FFF, 1941px 751px #FFF, 
+                188px 1488px #FFF, 835px 1253px #FFF, 313px 188px #FFF;
             animation: animStar 50s linear infinite;
         }
 
@@ -52,8 +67,15 @@
             width: 2px;
             height: 2px;
             box-shadow: 
+                /* Originales */
                 1694px 528px #FFF, 1373px 1827px #FFF, 129px 1278px #FFF, 
-                1184px 173px #FFF, 599px 127px #FFF, 1289px 428px #FFF;
+                1184px 173px #FFF, 599px 127px #FFF, 1289px 428px #FFF,
+                /* Añadidas */
+                83px 1000px #FFF, 1629px 1011px #FFF, 1466px 175px #FFF, 
+                1791px 1957px #FFF, 1109px 1317px #FFF, 1316px 1483px #FFF, 
+                1823px 1586px #FFF, 1030px 1927px #FFF, 1538px 1198px #FFF, 
+                174px 1937px #FFF, 1080px 1445px #FFF, 1904px 1269px #FFF, 
+                1057px 1182px #FFF, 516px 1555px #FFF, 107px 90px #FFF;
             animation: animStar 100s linear infinite;
         }
 
@@ -61,8 +83,13 @@
             width: 3px;
             height: 3px;
             box-shadow: 
+                /* Originales */
                 1708px 1013px #FFF, 1844px 197px #FFF, 799px 803px #FFF, 
-                105px 186px #FFF, 1029px 1095px #FFF, 1481px 1139px #FFF;
+                105px 186px #FFF, 1029px 1095px #FFF, 1481px 1139px #FFF,
+                /* Añadidas */
+                1834px 1909px #FFF, 89px 1341px #FFF, 1111px 1601px #FFF, 
+                1915px 1105px #FFF, 1529px 383px #FFF, 1344px 1238px #FFF, 
+                608px 1950px #FFF, 48px 637px #FFF, 423px 131px #FFF;
             animation: animStar 150s linear infinite;
         }
         

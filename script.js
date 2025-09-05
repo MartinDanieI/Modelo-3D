@@ -1,106 +1,147 @@
-
 import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        // Descomenta la siguiente línea si vas a cargar modelos .glb
-        // import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+// CAMBIO CLAVE: Descomentado para poder usarlo.
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-        // --- FUNCIÓN REUTILIZABLE PARA INICIAR UNA ESCENA 3D ---
-        function initViewer(canvasId, modelInfo) {
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) {
-                console.error(`Canvas con id ${canvasId} no encontrado.`);
-                return;
-            }
+// --- FUNCIÓN REUTILIZABLE PARA INICIAR UNA ESCENA 3D ---
+function initViewer(canvasId, modelInfo) {
+    const canvas = document.getElementById(canvasId);
+    // CAMBIO DE ESTABILIDAD: Obtenemos el contenedor padre para asegurar dimensiones correctas.
+    const container = canvas.parentElement;
 
-            // 1. Escena
-            const scene = new THREE.Scene();
+    if (!canvas || !container) {
+        console.error(`Canvas o contenedor no encontrado para ${canvasId}.`);
+        return;
+    }
 
-            // 2. Cámara
-            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-            camera.position.z = 3;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
 
-            // 3. Renderizador
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+    if (width === 0 || height === 0) {
+         console.error(`¡El contenedor para ${canvasId} sigue teniendo dimensiones cero!`);
+         return;
+    }
 
-            // 4. Controles de órbita (para mover el objeto)
-            const controls = new OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true; // Efecto de "arrastre" suave
-            controls.dampingFactor = 0.05;
-            controls.enableZoom = true;
-            controls.autoRotate = true; // Rotación automática
-            controls.autoRotateSpeed = 1.0;
+    // 1. Escena
+    const scene = new THREE.Scene();
 
-            // 5. Luces
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
+    // 2. Cámara
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    camera.position.set(0, 0, 2.5);
 
-            // --- CARGA DEL MODELO 3D (AQUÍ ES DONDE PONES TU CAMISETA) ---
-            
-            // --- OPCIÓN A: USAR UN CARGADOR GLTF PARA TUS MODELOS DE BLENDER ---
-            // const loader = new GLTFLoader();
-            // loader.load(
-            //     'path/to/your/tshirt.glb', // <--- REEMPLAZA ESTO CON LA RUTA A TU MODELO
-            //     (gltf) => {
-            //         const model = gltf.scene;
-            //         model.scale.set(1, 1, 1); // Ajusta la escala si es necesario
-            //         model.position.set(0, 0, 0); // Centra el modelo
-            //         scene.add(model);
-            //     },
-            //     undefined, // Función de progreso (opcional)
-            //     (error) => {
-            //         console.error('Un error ocurrió al cargar el modelo:', error);
-            //     }
-            // );
+    // 3. Renderizador
+    // Se restaura el cambio para el fondo blanco
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: false, antialias: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(0xffffff, 1);
 
-            // --- OPCIÓN B: MARCADOR DE POSICIÓN (GEOMETRÍA BÁSICA DE THREE.JS) ---
-            const geometry = modelInfo.geometry;
-            const material = new THREE.MeshStandardMaterial({ 
-                color: modelInfo.color,
-                metalness: 0.3,
-                roughness: 0.6
-            });
-            const placeholderMesh = new THREE.Mesh(geometry, material);
-            scene.add(placeholderMesh);
-            // --- FIN DEL MARCADOR DE POSICIÓN ---
+    // 4. Controles de órbita
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.enableZoom = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 1.0;
+    // CAMBIO DE ZOOM: Permitimos que la cámara se acerque mucho más.
+    controls.minDistance = 1;
+    controls.maxDistance = 4;
 
+    // 5. Luces
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(directionalLight);
 
-            // Responsividad: Ajustar el tamaño del canvas si la ventana cambia
-            window.addEventListener('resize', () => {
-                const container = canvas.parentElement;
-                if(container.clientWidth > 0 && container.clientHeight > 0) {
-                    camera.aspect = container.clientWidth / container.clientHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(container.clientWidth, container.clientHeight);
+    // --- CARGA DEL MODELO 3D (LÓGICA ACTUALIZADA) ---
+    
+    // CAMBIO CLAVE: Comprobamos si el modelo tiene una URL para cargar un .glb
+    if (modelInfo.url) {
+        // --- OPCIÓN A: USAR UN CARGADOR GLTF PARA TUS MODELOS DE BLENDER ---
+        const loader = new GLTFLoader();
+        loader.load(
+            modelInfo.url, // Usamos la URL del objeto de configuración
+            (gltf) => {
+                const model = gltf.scene;
+                
+                // --- CÓDIGO PARA CENTRAR Y ESCALAR AUTOMÁTICAMENTE (CON CORRECCIONES) ---
+                const box = new THREE.Box3().setFromObject(model);
+                const size = box.getSize(new THREE.Vector3());
+                const center = box.getCenter(new THREE.Vector3());
+
+                // 2. Mover el modelo para que su centro esté en el origen (0,0,0) - MODO CORREGIDO
+                model.position.sub(center);
+
+                // CAMBIO DE CENTRADO: Aumentamos el valor para subir más la camiseta.
+                model.position.y += 0.8;
+
+                // 3. Escalar el modelo para que quepa bien en la vista
+                const maxDim = Math.max(size.x, size.y, size.z);
+                
+                // LA SOLUCIÓN: Añadimos una "red de seguridad" para evitar la división por cero.
+                if (maxDim > 0) {
+                    // CAMBIO DE TAMAÑO: Hacemos el modelo un poco más grande desde el inicio.
+                    const scale = 2.2 / maxDim;
+                    model.scale.set(scale, scale, scale);
                 }
-            });
+                // --- FIN DEL CÓDIGO AUTOMÁTICO ---
 
-            // Bucle de animación
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update(); // Necesario para el damping y la autorotación
-                renderer.render(scene, camera);
+                scene.add(model);
+            },
+            undefined, 
+            (error) => {
+                console.error(`Ocurrió un error al cargar el modelo ${modelInfo.url}:`, error);
             }
-
-            animate();
-        }
-
-        // --- INICIAR LOS 5 VISUALIZADORES CUANDO LA PÁGINA ESTÉ LISTA ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Información para los modelos de marcador de posición
-            const models = [
-                { id: 'canvas-1', geometry: new THREE.IcosahedronGeometry(1, 0), color: 0x3b82f6 }, // Azul
-                { id: 'canvas-2', geometry: new THREE.TorusGeometry(0.8, 0.3, 16, 100), color: 0x8b5cf6 }, // Violeta
-                { id: 'canvas-3', geometry: new THREE.OctahedronGeometry(1), color: 0xec4899 }, // Rosa
-                { id: 'canvas-4', geometry: new THREE.TorusKnotGeometry(0.7, 0.2, 100, 16), color: 0xf59e0b }, // Naranja
-                { id: 'canvas-5', geometry: new THREE.CapsuleGeometry(0.6, 0.6, 4, 8), color: 0x10b981 } // Verde
-            ];
-
-            models.forEach(model => {
-                initViewer(model.id, { geometry: model.geometry, color: model.color });
-            });
+        );
+    } else {
+        // --- OPCIÓN B: MARCADOR DE POSICIÓN (PARA LOS DEMÁS VISORES) ---
+        const geometry = modelInfo.geometry;
+        const material = new THREE.MeshStandardMaterial({ 
+            color: modelInfo.color,
+            metalness: 0.3,
+            roughness: 0.6
         });
+        const placeholderMesh = new THREE.Mesh(geometry, material);
+        scene.add(placeholderMesh);
+    }
+    // --- FIN DE LA LÓGICA DE CARGA ---
+
+    // Responsividad
+    window.addEventListener('resize', () => {
+        const newWidth = container.clientWidth;
+        const newHeight = container.clientHeight;
+        if(newWidth > 0 && newHeight > 0) {
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(newWidth, newHeight);
+        }
+    });
+
+    // Bucle de animación
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+}
+
+// --- INICIAR LOS VISUALIZADORES ---
+// CAMBIO DE ESTABILIDAD: Usamos 'load' y 'requestAnimationFrame' para evitar errores de timing.
+window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+        const models = [
+            { id: 'canvas-1', url: 'camisetas/mi_camiseta.glb' },
+            { id: 'canvas-2', url: 'camisetas/mi_camiseta2.glb' },
+            { id: 'canvas-3', url: 'camisetas/mi_camiseta3.glb' },
+            { id: 'canvas-4', url: 'camisetas/mi_camiseta4.glb' },
+            { id: 'canvas-5', url: 'camisetas/mi_camiseta5.glb' },
+            { id: 'canvas-6', url: 'camisetas/mi_camiseta6.glb' }
+        ];
+
+        models.forEach(model => {
+            initViewer(model.id, model);
+        });
+    });
+});
