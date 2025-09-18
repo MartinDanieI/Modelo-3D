@@ -132,12 +132,12 @@ function initViewer(canvasId, modelInfo) {
 window.addEventListener('load', () => {
     requestAnimationFrame(() => {
         const models = [
-            { id: 'canvas-1', url: 'camisetas/mi_camiseta.glb' },
-            { id: 'canvas-2', url: 'camisetas/mi_camiseta2.glb' },
-            { id: 'canvas-3', url: 'camisetas/mi_camiseta3.glb' },
-            { id: 'canvas-4', url: 'camisetas/mi_camiseta4.glb' },
-            { id: 'canvas-5', url: 'camisetas/mi_camiseta5.glb' },
-            { id: 'canvas-6', url: 'camisetas/mi_camiseta6.glb' }
+            { id: 'canvas-1', url: 'camisetas/Camisa_celeste.glb' },
+            { id: 'canvas-2', url: 'camisetas/Camisa_colombia.glb' },
+            { id: 'canvas-3', url: 'camisetas/Camisa_morada.glb' },
+            { id: 'canvas-4', url: 'camisetas/Camisa_naranja.glb' },
+            { id: 'canvas-5', url: 'camisetas/Camisa_roja.glb' },
+            { id: 'canvas-6', url: 'camisetas/Camisa_verde.glb' }
         ];
 
         models.forEach(model => {
