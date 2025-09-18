@@ -27,7 +27,7 @@
         }
 
         #sidebar {
-            width: 280px;
+            width: 380px;
             background-color: #2b2b2b;
             padding: 20px;
             box-sizing: border-box;
@@ -136,9 +136,9 @@
 }
 
 #model-description {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #ccc;
+    font-size: 16px; /* Aumenta el tamaño de la letra */
+    line-height: 1.6; /* Aumenta el espacio entre líneas para mejor legibilidad */
+    color: #e0e0e0; /* Aclara el color del texto para mejor contraste */
     min-height: 50px;
 }
 /* From Uiverse.io by vinodjangid07 */ 
@@ -255,49 +255,49 @@
     
     <script type="module">
         import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
         const modelsInfo = [
     {
         id: 'colombia',
         name: 'Camiseta Colombia',
         path: 'camisetas/Camisa_colombia.glb', // <-- ¡PON TUS RUTAS CORRECTAS AQUÍ!
-        description: 'Lleva a Colombia en el alma.',
+        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Estilo Colombia\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
         color: '#f7d754'
     },
     {
-        id: 'azul',
-        name: 'Camiseta Azul',
-        path: 'camisetas/Camisa_celeste.glb',
-        description: 'Haz resaltar la energía que llevas por dentro.',
-        color: '#00aaff'
-    },
+  "id": "azul",
+  "name": "Camiseta Azul",
+  "path": "camisetas/Camisa_celeste.glb",
+  "description": "<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Celeste\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción",
+  "color": "#00aaff"
+},
     {
         id: 'morada',
         name: 'Camiseta morada',
         path: 'camisetas/Camisa_morada.glb',
-        description: 'Haz resaltar la energía que llevas por dentro.',
+        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Morada\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
         color: '#572364'
     },
     {
         id: 'naranja',
         name: 'Camiseta naranja',
         path: 'camisetas/Camisa_naranja.glb',
-        description: 'Haz resaltar la energía que llevas por dentro.',
+        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Naranja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
         color: '#FF8000'
     },
     {
         id: 'roja',
         name: 'Camiseta roja',
         path: 'camisetas/Camisa_roja.glb',
-        description: 'Haz resaltar la energía que llevas por dentro.',
+        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Roja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
         color: '#ff0000'
     },
     {
         id: 'verde',
         name: 'Camiseta Verde',
         path: 'camisetas/Camisa_verde.glb',
-        description: 'Haz resaltar la energía que llevas por dentro.',
+        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Verde\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
         color: '#00a125'
     },
     // ...Añade aquí el resto de tus camisetas...
@@ -343,44 +343,49 @@
         // --- CARGADOR DE MODELO ---
        // --- LÓGICA DE CARGA ---
 const loader = new GLTFLoader();
-let currentModel; // Variable para mantener el modelo actual en la escena
+    let currentModel;
 
-function loadModel(modelInfo) {
-    // Si ya hay un modelo en la escena, lo quitamos antes de cargar el nuevo
-    if (currentModel) {
-        scene.remove(currentModel);
+    function loadModel(modelInfo) {
+        if (currentModel) {
+            scene.remove(currentModel);
+        }
+
+        loader.load(modelInfo.path, (gltf) => {
+            currentModel = gltf.scene;
+            currentModel.traverse((node) => {
+                if (node.isMesh) {
+                    node.castShadow = true;
+                    node.receiveShadow = true;
+                }
+            });
+
+            const box = new THREE.Box3().setFromObject(currentModel);
+            const center = box.getCenter(new THREE.Vector3());
+            currentModel.position.sub(center);
+            scene.add(currentModel);
+        });
     }
 
-    loader.load(modelInfo.path, (gltf) => {
-        currentModel = gltf.scene; // Asignamos el nuevo modelo a nuestra variable
-        currentModel.traverse((node) => {
-            if (node.isMesh) {
-                node.castShadow = true;
-                node.receiveShadow = true;
+    // --- LÓGICA DE LA INTERFAZ ---
+    const modelSwitcher = document.getElementById('model-switcher');
+    const modelDescription = document.getElementById('model-description');
+
+    // Función para actualizar la descripción y el botón activo
+    function updateUI(modelInfo) {
+        // CORRECCIÓN: Usamos innerHTML para que se interprete el HTML (ej. <b>).
+        // También reemplazamos los saltos de línea (\n) por <br> para que se vean bien.
+        modelDescription.innerHTML = modelInfo.description.replace(/\n/g, '<br>');
+
+        document.querySelectorAll('.color-button').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.modelId === modelInfo.id) {
+                btn.classList.add('active');
             }
         });
+    }
 
-        // Centrar el modelo (código que ya tenías)
-        const box = new THREE.Box3().setFromObject(currentModel);
-        const center = box.getCenter(new THREE.Vector3());
-        currentModel.position.sub(center);
-        scene.add(currentModel);
-    });
-}
-// --- LÓGICA DE LA INTERFAZ ---
-const modelSwitcher = document.getElementById('model-switcher');
-const modelDescription = document.getElementById('model-description');
+    // ... (El resto de tu código para crear botones y la animación) ...
 
-// Función para actualizar la descripción y el botón activo
-function updateUI(modelInfo) {
-    modelDescription.innerText = modelInfo.description;
-    document.querySelectorAll('.color-button').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.modelId === modelInfo.id) {
-            btn.classList.add('active');
-        }
-    });
-}
 
 // Crear los botones de colores dinámicamente
 modelsInfo.forEach(model => {
