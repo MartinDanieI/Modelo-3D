@@ -8,16 +8,20 @@
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #8a8a8a;
+            background-color: #1e1e1e; /* Color de fondo actualizado */
             color: #fff;
             display: flex;
             height: 100vh;
             overflow: hidden;
+            /* Flexbox para la vista de escritorio */
+            flex-direction: row; 
         }
 
         #viewer-container {
             flex-grow: 1;
-            background-color: #ffffff; /*   Fondo del visor */
+            background-color: #333;
+            position: relative;
+            /* La altura se gestiona en la media query para móviles */
         }
 
         #canvas {
@@ -34,6 +38,7 @@
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            /* La posición de la barra lateral se gestiona en la media query para móviles */
         }
 
         h3 {
@@ -66,9 +71,6 @@
             border-color: #0078d4;
         }
         
-        /* Estilos de los temas */
-       
-
         .slider-container label {
             display: block;
             margin-bottom: 10px;
@@ -79,145 +81,178 @@
             width: 100%;
             cursor: pointer;
         }
-        body {
-    background-color: #1e1e1e;
-}
-#viewer-container {
-    position: relative; /* Necesario para los botones */
-    background-color: #333;
-}
 
-/* Contenedor de los botones de colores */
-#model-switcher {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    background-color: rgba(40, 40, 40, 0.7);
-    padding: 8px;
-    border-radius: 12px;
-    z-index: 10;
-}
+        /* Contenedor de los botones de colores */
+        #model-switcher {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 8px;
+            border-radius: 12px;
+            z-index: 10;
+        }
 
-.color-button {
-    width: 30px;
-    height: 30px;
-    border: 2px solid #555;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
+        .color-button {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #555;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
 
-.color-button:hover {
-    transform: scale(1.1);
-    border-color: #00aaff;
-}
+        .color-button:hover {
+            transform: scale(1.1);
+            border-color: #00aaff;
+        }
 
-.color-button.active {
-    border-color: #ffffff;
-    transform: scale(1.15);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
+        .color-button.active {
+            border-color: #ffffff;
+            transform: scale(1.15);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
 
-/* Cuadro de descripción */
-#description-box {
-    background-color: #3a3a3a;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px;
-}
+        /* Cuadro de descripción */
+        #description-box {
+            background-color: #3a3a3a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
 
-#description-box h3 {
-    margin-top: 0;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #555;
-}
+        #description-box h3 {
+            margin-top: 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #555;
+        }
 
-#model-description {
-    font-size: 16px; /* Aumenta el tamaño de la letra */
-    line-height: 1.6; /* Aumenta el espacio entre líneas para mejor legibilidad */
-    color: #e0e0e0; /* Aclara el color del texto para mejor contraste */
-    min-height: 50px;
-}
-/* From Uiverse.io by vinodjangid07 */ 
-.Btn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 45px;
-  height: 45px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition-duration: .3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: rgb(255, 65, 65);
-}
+        #model-description {
+            font-size: 16px; 
+            line-height: 1.6;
+            color: #e0e0e0; 
+            min-height: 50px;
+        }
+        
+        /* Estilos del botón de Logout */
+        .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color: rgb(255, 65, 65);
+        }
 
-/* plus sign */
-.sign {
-  width: 100%;
-  transition-duration: .3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+        .sign {
+            width: 100%;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.sign svg {
-  width: 17px;
-}
+        .sign svg {
+            width: 17px;
+        }
 
-.sign svg path {
-  fill: white;
-}
-/* text */
-.text {
-  position: absolute;
-  right: 0%;
-  width: 0%;
-  opacity: 0;
-  color: white;
-  font-size: 1.2em;
-  font-weight: 600;
-  transition-duration: .3s;
-}
-/* hover effect on button width */
-.Btn:hover {
-  width: 125px;
-  border-radius: 40px;
-  transition-duration: .3s;
-}
+        .sign svg path {
+            fill: white;
+        }
 
-.Btn:hover .sign {
-  width: 30%;
-  transition-duration: .3s;
-  padding-left: 20px;
-}
-/* hover effect button's text */
-.Btn:hover .text {
-  opacity: 1;
-  width: 70%;
-  transition-duration: .3s;
-  padding-right: 10px;
-}
-/* button click effect*/
-.Btn:active {
-  transform: translate(2px ,2px);
-}
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover {
+            width: 125px;
+            border-radius: 40px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 20px;
+        }
+
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 10px;
+        }
+
+        .Btn:active {
+            transform: translate(2px ,2px);
+        }
+        
+        /* --- MEDIA QUERIES PARA RESPONSIVE --- */
+        @media (max-width: 768px) {
+            body {
+                /* Para móviles, cambia la dirección del flexbox a columna */
+                flex-direction: column;
+                overflow-y: auto; /* Permite scroll vertical */
+            }
+
+            #viewer-container {
+                /* Ocupa el 100% del ancho y una porción de la altura */
+                width: 100%;
+                height: 50vh; /* Ajusta la altura del visor en móviles */
+                flex-grow: 0; /* Deshabilita el crecimiento */
+            }
+
+            #sidebar {
+                /* Ocupa el 100% del ancho y lo que queda de altura */
+                width: 100%;
+                height: 50vh;
+                padding: 15px; /* Reduce el padding para pantallas más pequeñas */
+            }
+
+            #model-switcher {
+                /* Ajusta el espaciado y el padding para móviles */
+                gap: 5px;
+                padding: 6px;
+            }
+
+            .color-button {
+                /* Reduce el tamaño de los botones para que quepan mejor */
+                width: 25px;
+                height: 25px;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            .slider-container label, #model-description {
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
-
-   <div id="viewer-container">
+    <div id="viewer-container">
         <div id="model-switcher"></div>
-
         <canvas id="canvas"></canvas>
     </div>
-
     <div id="sidebar">
         <div class="control-section">
             <h3>Rotación de la luz</h3>
@@ -226,24 +261,17 @@
                 <input type="range" id="light-rotation" min="-180" max="180" value="45">
             </div>
         </div>
-
         <div id="description-box" class="control-section">
             <h3>Descripción</h3>
             <p id="model-description">Selecciona un modelo para ver su descripción.</p>
         </div>
-        <a href="index.html"><!-- From Uiverse.io by vinodjangid07 --> 
-<button class="Btn">
-  
-  <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-  
-  <div class="text">Logout</div>
-</button>
-
-
-</a>
+        <a href="index.html">
+            <button class="Btn">
+                <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
+                <div class="text">Logout</div>
+            </button>
+        </a>
     </div>
-
-
     <script type="importmap">
         {
             "imports": {
@@ -252,86 +280,41 @@
             }
         }
     </script>
-    
     <script type="module">
         import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-        const modelsInfo = [
-    {
-        id: 'colombia',
-        name: 'Camiseta Colombia',
-        path: 'camisetas/Camisa_colombia.glb', // <-- ¡PON TUS RUTAS CORRECTAS AQUÍ!
-        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Estilo Colombia\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
-        color: '#f7d754'
-    },
-    {
-  "id": "azul",
-  "name": "Camiseta Azul",
-  "path": "camisetas/Camisa_celeste.glb",
-  "description": "<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Celeste\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción",
-  "color": "#00aaff"
-},
-    {
-        id: 'morada',
-        name: 'Camiseta morada',
-        path: 'camisetas/Camisa_morada.glb',
-        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Morada\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
-        color: '#572364'
-    },
-    {
-        id: 'naranja',
-        name: 'Camiseta naranja',
-        path: 'camisetas/Camisa_naranja.glb',
-        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Naranja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
-        color: '#FF8000'
-    },
-    {
-        id: 'roja',
-        name: 'Camiseta roja',
-        path: 'camisetas/Camisa_roja.glb',
-        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Roja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
-        color: '#ff0000'
-    },
-    {
-        id: 'verde',
-        name: 'Camiseta Verde',
-        path: 'camisetas/Camisa_verde.glb',
-        description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Verde\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción',
-        color: '#00a125'
-    },
-    // ...Añade aquí el resto de tus camisetas...
-];
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-        // --- CONFIGURACIÓN BÁSICA ---
+        const modelsInfo = [
+            { id: 'colombia', name: 'Camiseta Colombia', path: 'camisetas/Camisa_colombia.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Estilo Colombia\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#f7d754' },
+            { id: 'azul', name: 'Camiseta Azul', path: 'camisetas/Camisa_celeste.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Celeste\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#00aaff' },
+            { id: 'morada', name: 'Camiseta morada', path: 'camisetas/Camisa_morada.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Morada\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#572364' },
+            { id: 'naranja', name: 'Camiseta naranja', path: 'camisetas/Camisa_naranja.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Naranja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#FF8000' },
+            { id: 'roja', name: 'Camiseta roja', path: 'camisetas/Camisa_roja.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Roja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#ff0000' },
+            { id: 'verde', name: 'Camiseta Verde', path: 'camisetas/Camisa_verde.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Verde\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#00a125' }
+        ];
+
         const canvas = document.querySelector('#canvas');
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
         renderer.shadowMap.enabled = true; 
         renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
-       const scene = new THREE.Scene();
-       
+        const scene = new THREE.Scene();
         scene.background = new THREE.Color(0xdadada); 
-
-       
-        scene.fog = new THREE.Fog(scene.background, 5, 40  ); 
+        scene.fog = new THREE.Fog(scene.background, 5, 40); 
         const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0.8, 3.5); // Posición inicial de la cámara
-
+        camera.position.set(0, 0.8, 3.5); 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         
-        // --- LUCES ---
-         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // Antes 0.5, ahora 0.8
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); 
         scene.add(ambientLight);
 
-        // La luz direccional que crea las sombras. Ajustamos su posición e intensidad.
-       const directionalLight = new THREE.DirectionalLight(0xffffff, 3.5);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 3.5);
         directionalLight.position.set(1.5, 2, 2.5);
-        directionalLight.castShadow = true; // Esta luz proyectará sombras
+        directionalLight.castShadow = true; 
 
-        // Opcional: Ajustar los parámetros del mapa de sombras para la luz direccional
-        directionalLight.shadow.mapSize.width = 1024; // Resolución del mapa de sombras
-        directionalLight.shadow.mapSize.height = 1024; // Mayor resolución = sombras más detalladas
+        directionalLight.shadow.mapSize.width = 1024; 
+        directionalLight.shadow.mapSize.height = 1024; 
         directionalLight.shadow.camera.near = 0.5;
         directionalLight.shadow.camera.far = 10;
         directionalLight.shadow.camera.left = -5;
@@ -340,100 +323,84 @@
         directionalLight.shadow.camera.bottom = -5;
         scene.add(directionalLight);
         
-        // --- CARGADOR DE MODELO ---
-       // --- LÓGICA DE CARGA ---
-const loader = new GLTFLoader();
-    let currentModel;
+        const loader = new GLTFLoader();
+        let currentModel;
 
-    function loadModel(modelInfo) {
-        if (currentModel) {
-            scene.remove(currentModel);
+        function loadModel(modelInfo) {
+            if (currentModel) {
+                scene.remove(currentModel);
+            }
+
+            loader.load(modelInfo.path, (gltf) => {
+                currentModel = gltf.scene;
+                currentModel.traverse((node) => {
+                    if (node.isMesh) {
+                        node.castShadow = true;
+                        node.receiveShadow = true;
+                    }
+                });
+
+                const box = new THREE.Box3().setFromObject(currentModel);
+                const center = box.getCenter(new THREE.Vector3());
+                currentModel.position.sub(center);
+                scene.add(currentModel);
+            });
         }
 
-        loader.load(modelInfo.path, (gltf) => {
-            currentModel = gltf.scene;
-            currentModel.traverse((node) => {
-                if (node.isMesh) {
-                    node.castShadow = true;
-                    node.receiveShadow = true;
+        const modelSwitcher = document.getElementById('model-switcher');
+        const modelDescription = document.getElementById('model-description');
+
+        function updateUI(modelInfo) {
+            modelDescription.innerHTML = modelInfo.description.replace(/\n/g, '<br>');
+            document.querySelectorAll('.color-button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.modelId === modelInfo.id) {
+                    btn.classList.add('active');
                 }
             });
+        }
 
-            const box = new THREE.Box3().setFromObject(currentModel);
-            const center = box.getCenter(new THREE.Vector3());
-            currentModel.position.sub(center);
-            scene.add(currentModel);
+        modelsInfo.forEach(model => {
+            const button = document.createElement('button');
+            button.className = 'color-button';
+            button.style.backgroundColor = model.color;
+            button.dataset.modelId = model.id;
+            button.title = model.name;
+            
+            button.addEventListener('click', () => {
+                loadModel(model);
+                updateUI(model);
+            });
+            
+            modelSwitcher.appendChild(button);
         });
-    }
 
-    // --- LÓGICA DE LA INTERFAZ ---
-    const modelSwitcher = document.getElementById('model-switcher');
-    const modelDescription = document.getElementById('model-description');
-
-    // Función para actualizar la descripción y el botón activo
-    function updateUI(modelInfo) {
-        // CORRECCIÓN: Usamos innerHTML para que se interprete el HTML (ej. <b>).
-        // También reemplazamos los saltos de línea (\n) por <br> para que se vean bien.
-        modelDescription.innerHTML = modelInfo.description.replace(/\n/g, '<br>');
-
-        document.querySelectorAll('.color-button').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.modelId === modelInfo.id) {
-                btn.classList.add('active');
-            }
-        });
-    }
-
-    // ... (El resto de tu código para crear botones y la animación) ...
-
-
-// Crear los botones de colores dinámicamente
-modelsInfo.forEach(model => {
-    const button = document.createElement('button');
-    button.className = 'color-button';
-    button.style.backgroundColor = model.color;
-    button.dataset.modelId = model.id;
-    button.title = model.name;
-    
-    // Añadir el evento de clic a cada botón
-    button.addEventListener('click', () => {
-        loadModel(model); // Carga el modelo correspondiente
-        updateUI(model);  // Actualiza la UI
-    });
-    
-    modelSwitcher.appendChild(button);
-});
-        // --- SUELO (Para recibir sombras) ---
-        const groundGeometry = new THREE.PlaneGeometry(100, 100); // Un plano grande
+        const groundGeometry = new THREE.PlaneGeometry(100, 100); 
         const groundMaterial = new THREE.MeshStandardMaterial({
-            color: 0x9a9a9a, // Un gris oscuro similar al fondo
+            color: 0x9a9a9a, 
             roughness: 0.8,
             metalness: 0.1
         });
         const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-        ground.rotation.x = -Math.PI / 2; // Rotar para que quede plano en el suelo
-        ground.position.y = -2; // Ajusta esta posición para que el modelo quede "sobre" el suelo
-        ground.receiveShadow = true; // El plano recibirá las sombras
+        ground.rotation.x = -Math.PI / 2; 
+        ground.position.y = -2; 
+        ground.receiveShadow = true;
         scene.add(ground);
         
         if (modelsInfo.length > 0) {
-    loadModel(modelsInfo[0]);
-    updateUI(modelsInfo[0]);
-}
-        // --- FUNCIÓN DE RENDERIZADO Y ANIMACIÓN ---
-     function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    
-    // Cambia 'model' por 'currentModel' aquí
-    if (currentModel) {
-        currentModel.rotation.y += 0.005;
-    }
-    
-    renderer.render(scene, camera);
-}
+            loadModel(modelsInfo[0]);
+            updateUI(modelsInfo[0]);
+        }
         
-        // --- MANEJO DEL TAMAÑO DE LA VENTANA ---
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            if (currentModel) {
+                currentModel.rotation.y += 0.005;
+            }
+            renderer.render(scene, camera);
+        }
+        
         function onWindowResize() {
             const container = document.getElementById('viewer-container');
             camera.aspect = container.clientWidth / container.clientHeight;
@@ -441,24 +408,15 @@ modelsInfo.forEach(model => {
             renderer.setSize(container.clientWidth, container.clientHeight);
         }
         window.addEventListener('resize', onWindowResize);
-        onWindowResize(); // Llama una vez al inicio
+        onWindowResize(); 
 
-        animate(); // Inicia el bucle de animación
+        animate(); 
 
-        // --- LÓGICA DE LA INTERFAZ DE USUARIO ---
-        
-        // Control de rotación de la luz
         document.getElementById('light-rotation').addEventListener('input', (event) => {
-            const angle = event.target.value * (Math.PI / 180); // Convertir grados a radianes
+            const angle = event.target.value * (Math.PI / 180); 
             directionalLight.position.x = Math.sin(angle) * 2;
             directionalLight.position.z = Math.cos(angle) * 2;
         });
-        
-        // Temas de iluminación
-       
-        
-       
-
     </script>
 </body>
 </html>
