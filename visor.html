@@ -287,12 +287,48 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // --- Base de datos de tus modelos ---
 const modelsInfo = [
-    { id: 'colombia', name: 'Camiseta Colombia', path: 'camisetas/Camisa_colombia.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Estilo Colombia\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#f7d754' },
-    { id: 'azul', name: 'Camiseta Azul', path: 'camisetas/Camisa_celeste.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Celeste\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#00aaff' },
-    { id: 'morada', name: 'Camiseta morada', path: 'camisetas/Camisa_morada.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Morada\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#572364' },
-    { id: 'naranja', name: 'Camiseta naranja', path: 'camisetas/Camisa_naranja.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Naranja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#FF8000' },
-    { id: 'roja', name: 'Camiseta roja', path: 'camisetas/Camisa_roja.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Roja\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#ff0000' },
-    { id: 'verde', name: 'Camiseta Verde', path: 'camisetas/Camisa_verde.glb', description: '<b>Tipo:</b> Camiseta unisex de manga corta\n<b>Color:</b> Verde\n<b>Estampado:</b> Astronauta en el pecho, con un pequeño logo en el hombro\n<b>Material:</b> Algodón (o mezcla de algodón y poliéster)\n<b>Cuello:</b> Redondo con ribete negro\n<b>Mangas:</b> Cortas con ribete negro\n<b>Corte:</b> Recto y holgado\n<b>Tallas:</b> S, M, L, XL, XXL\n<b>Estilo:</b> Casual, con temática de ciencia ficción', color: '#00a125' }
+    { 
+        id: 'colombia', 
+        name: 'Jersey Colombia SkinPro', 
+        path: 'camisetas/Camisa_colombia.glb', 
+        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
+        color: '#f7d754' 
+    },
+    { 
+        id: 'azul', 
+        name: 'Jersey Azul SkinPro', 
+        path: 'camisetas/Camisa_celeste.glb', 
+        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
+        color: '#00aaff' 
+    },
+    { 
+        id: 'morada', 
+        name: 'Jersey Morado SkinPro', 
+        path: 'camisetas/Camisa_morada.glb', 
+        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
+        color: '#572364' 
+    },
+    { 
+        id: 'naranja', 
+        name: 'Jersey Naranja SkinPro', 
+        path: 'camisetas/Camisa_naranja.glb', 
+        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
+        color: '#FF8000' 
+    },
+    { 
+        id: 'roja', 
+        name: 'Jersey Rojo SkinPro', 
+        path: 'camisetas/Camisa_roja.glb', 
+        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
+        color: '#ff0000' 
+    },
+    { 
+        id: 'verde', 
+        name: 'Jersey Verde SkinPro', 
+        path: 'camisetas/Camisa_verde.glb', 
+        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
+        color: '#00a125' 
+    }
 ];
 
 // --- CONFIGURACIÓN DE LA ESCENA ---
