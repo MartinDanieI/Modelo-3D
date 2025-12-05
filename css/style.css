@@ -1,298 +1,225 @@
-/* Estilos personalizados para el fondo espacial y mejoras visuales */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000411; /* Azul noche muy oscuro */
-            color: #ffffff;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Contenedor para las estrellas para que no interfieran con el contenido */
-        .stars-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        /* Capas de estrellas para efecto parallax */
-        .stars, .stars2, .stars3 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            background: transparent;
-        }
-        
-        /* Animaciones */
-        @keyframes animStar {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-2000px); }
-        }
-
-        /* Usamos box-shadow para crear las estrellas. 
-           Estos valores son generados para simular el efecto aleatorio. */
-        .stars {
-            width: 1px;
-            height: 1px;
-            box-shadow: 
-                /* Originales */
-                1879px 1211px #FFF, 1729px 1374px #FFF, 1151px 338px #FFF, 
-                56px 1663px #FFF, 1495px 1006px #FFF, 1243px 1568px #FFF,
-                /* Añadidas */
-                406px 735px #FFF, 1335px 686px #FFF, 67px 355px #FFF, 
-                156px 1774px #FFF, 1993px 1438px #FFF, 1421px 1199px #FFF, 
-                1289px 1272px #FFF, 153px 1302px #FFF, 1290px 45px #FFF, 
-                75px 827px #FFF, 1018px 233px #FFF, 151px 1081px #FFF, 
-                885px 1003px #FFF, 1318px 129px #FFF, 114px 1792px #FFF, 
-                1538px 1827px #FFF, 1022px 1426px #FFF, 1485px 1864px #FFF, 
-                1793px 801px #FFF, 1694px 1974px #FFF, 1974px 1475px #FFF, 
-                1495px 788px #FFF, 1374px 1907px #FFF, 1489px 74px #FFF, 
-                1059px 1290px #FFF, 91px 209px #FFF, 1581px 195px #FFF, 
-                1199px 1860px #FFF, 1311px 1709px #FFF, 1388px 174px #FFF, 
-                680px 1000px #FFF, 381px 1928px #FFF, 1898px 993px #FFF, 
-                1377px 621px #FFF, 1507px 1716px #FFF, 1941px 751px #FFF, 
-                188px 1488px #FFF, 835px 1253px #FFF, 313px 188px #FFF;
-            animation: animStar 50s linear infinite;
-        }
-
-        .stars2 {
-            width: 2px;
-            height: 2px;
-            box-shadow: 
-                /* Originales */
-                1694px 528px #FFF, 1373px 1827px #FFF, 129px 1278px #FFF, 
-                1184px 173px #FFF, 599px 127px #FFF, 1289px 428px #FFF,
-                /* Añadidas */
-                83px 1000px #FFF, 1629px 1011px #FFF, 1466px 175px #FFF, 
-                1791px 1957px #FFF, 1109px 1317px #FFF, 1316px 1483px #FFF, 
-                1823px 1586px #FFF, 1030px 1927px #FFF, 1538px 1198px #FFF, 
-                174px 1937px #FFF, 1080px 1445px #FFF, 1904px 1269px #FFF, 
-                1057px 1182px #FFF, 516px 1555px #FFF, 107px 90px #FFF;
-            animation: animStar 100s linear infinite;
-        }
-
-        .stars3 {
-            width: 3px;
-            height: 3px;
-            box-shadow: 
-                /* Originales */
-                1708px 1013px #FFF, 1844px 197px #FFF, 799px 803px #FFF, 
-                105px 186px #FFF, 1029px 1095px #FFF, 1481px 1139px #FFF,
-                /* Añadidas */
-                1834px 1909px #FFF, 89px 1341px #FFF, 1111px 1601px #FFF, 
-                1915px 1105px #FFF, 1529px 383px #FFF, 1344px 1238px #FFF, 
-                608px 1950px #FFF, 48px 637px #FFF, 423px 131px #FFF;
-            animation: animStar 150s linear infinite;
-        }
-        
-        /* Efecto de "glow" para las tarjetas y el título */
-        .card-glow {
-            border: 1px solid rgba(59, 130, 246, 0.5); /* Borde azul semi-transparente */
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3), 0 0 5px rgba(59, 130, 246, 0.2);
-            transition: all 0.3s ease-in-out;
-        }
-        .card-glow:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 10px rgba(59, 130, 246, 0.4);
-        }
-        .title-glow {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(59, 130, 246, 0.7);
-        }
-        
-        canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            cursor: grab;
-        }
-        canvas:active {
-            cursor: grabbing;
-        }
-        /* From Uiverse.io by MuhammadHasann */ 
-.button {
-  --black-700: rgb(3, 42, 82);
-  --border_radius: 9999px;
-  --transtion: 0.3s ease-in-out;
-  --offset: 2px;
-
-  cursor: pointer;
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  transform-origin: center;
-
-  padding: 1rem 2rem;
-  background-color: transparent;
-
- 
-
-  transition: transform var(--transtion);
-}
-
-.button::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  width: 100%;
-  height: 100%;
-  background-color: var(--black-700);
-
-  border-radius: var(--border_radius);
-  box-shadow: inset 0 0.5px hsl(0, 0%, 100%), inset 0 -1px 2px 0 hsl(0, 0%, 0%),
-    0px 4px 10px -4px hsla(0 0% 0% / calc(1 - var(--active, 0))),
-    0 0 0 calc(var(--active, 0) * 0.375rem) hsl(260 97% 50% / 0.75);
-
-  transition: all var(--transtion);
-  z-index: 0;
-}
-
-.button::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  width: 100%;
-  height: 100%;
-  background-color: hsla(260 97% 61% / 0.75);
-  background-image: radial-gradient(
-      at 51% 89%,
-      hsla(266, 45%, 74%, 1) 0px,
-      transparent 50%
-    ),
-    radial-gradient(at 100% 100%, hsla(266, 36%, 60%, 1) 0px, transparent 50%),
-    radial-gradient(at 22% 91%, hsla(266, 36%, 60%, 1) 0px, transparent 50%);
-  background-position: top;
-
-  opacity: var(--active, 0);
-  border-radius: var(--border_radius);
-  transition: opacity var(--transtion);
-  z-index: 2;
-}
-
-.button:is(:hover, :focus-visible) {
-  --active: 1;
-}
-.button:active {
-  transform: scale(1);
-}
-
-.button .dots_border {
-  --size_border: calc(100% + 2px);
-
+/* === ESTILOS GENERALES Y FONDO ESPACIAL === */
+body {
+  font-family: 'Inter', sans-serif;
+  /* Fondo de espacio con un blur de los colores de la empresa (cian y azul oscuro) */
+  background-color: #000411;
+  background-image: radial-gradient(circle at 50% 50%, rgba(0, 180, 216, 0.3), rgba(242, 140, 40, 0.25), #000411 70%);
+  /* Azul noche muy oscuro */
+  color: #ffffff;
   overflow: hidden;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  width: var(--size_border);
-  height: var(--size_border);
-  background-color: transparent;
-
-  border-radius: var(--border_radius);
-  z-index: -10;
+  margin: 0;
+  position: relative;
+  height: 100vh;
 }
 
-.button .dots_border::before {
-  content: "";
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transform-origin: left;
-  transform: rotate(0deg);
-
+/* Contenedor de estrellas CSS */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 2rem;
-  background-color: white;
-
-  mask: linear-gradient(transparent 0%, white 120%);
-  animation: rotate 2s linear infinite;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-@keyframes rotate {
+.stars,
+.stars2,
+.stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent;
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+
   to {
+    transform: translateY(-2000px);
+  }
+}
+
+/* Estrellas con un ligero tinte cian para combinar con el fondo */
+.stars {
+  width: 1px;
+  height: 1px;
+  animation: animStar 50s linear infinite;
+  box-shadow: 1879px 1211px #d4f1f9, 1729px 1374px #d4f1f9, 1151px 338px #d4f1f9, 56px 1663px #d4f1f9, 1495px 1006px #d4f1f9;
+}
+
+.stars2 {
+  width: 2px;
+  height: 2px;
+  animation: animStar 100s linear infinite;
+  box-shadow: 1694px 528px #a0e1ff, 1373px 1827px #a0e1ff, 129px 1278px #a0e1ff, 1184px 173px #a0e1ff;
+}
+
+.stars3 {
+  width: 3px;
+  height: 3px;
+  animation: animStar 150s linear infinite;
+  box-shadow: 1708px 1013px #57c4e8, 1844px 197px #57c4e8;
+}
+
+/* === PANTALLA DE CARGA === */
+#loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000411;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.1);
+  border-top: 5px solid #00B4D8;
+  /* Cian SkinPro */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
     transform: rotate(360deg);
   }
 }
 
+#progress-text {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+}
 
-.button .sparkle {
-  position: relative;
+/* === TÍTULO SKIN PRO (Ajustado) === */
+#title-menu {
+  position: absolute;
+  top: 15%;
+  /* Más abajo como pidió */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
   z-index: 10;
 
-  width: 1.75rem;
+  /* El efecto Blur Chimba */
+  background: rgba(0, 10, 30, 0.4);
+  /* Fondo semi-transparente */
+  backdrop-filter: blur(10px);
+  /* Desenfoque espacial */
+  padding: 20px 60px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
-.button .sparkle .path {
-  fill: currentColor;
-  stroke: currentColor;
-
-  transform-origin: center;
-
-  color: hsl(0, 0%, 100%);
+#title-menu h1 {
+  font-size: 3.5rem;
+  /* Un poco más contenido */
+  margin: 0;
+  font-weight: 800;
+  /* Gradiente sutil elegante */
+  background: linear-gradient(135deg, #ffffff 0%, #a0e1ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 180, 216, 0.3);
+  letter-spacing: -2px;
 }
 
-.button:is(:hover, :focus) .sparkle .path {
-  animation: path 1.5s linear 0.5s infinite;
+#title-menu p {
+  margin: 10px 0 0 0;
+  font-size: 0.9rem;
+  letter-spacing: 6px;
+  color: #90e0ef;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
-.button .sparkle .path:nth-child(1) {
-  --scale_path_1: 1.2;
-}
-.button .sparkle .path:nth-child(2) {
-  --scale_path_2: 1.2;
-}
-.button .sparkle .path:nth-child(3) {
-  --scale_path_3: 1.2;
-}
-
-@keyframes path {
-  0%,
-  34%,
-  71%,
-  100% {
-    transform: scale(1);
-  }
-  17% {
-    transform: scale(var(--scale_path_1, 1));
-  }
-  49% {
-    transform: scale(var(--scale_path_2, 1));
-  }
-  83% {
-    transform: scale(var(--scale_path_3, 1));
-  }
+/* === UI CONTROLS (VISOR) === */
+#ui-controls {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  background: rgba(0, 4, 17, 0.7);
+  padding: 15px 30px;
+  border-radius: 50px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+.color-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.color-btn:hover {
+  transform: scale(1.3);
+  border-color: white;
+}
+
+/* Botón Volver */
+.button {
+  --black-700: rgba(3, 42, 82, 0.8);
+  --border_radius: 9999px;
+  --transtion: 0.3s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+}
+
+/* Estilos internos del botón (reutilizados de su código anterior) */
 .button .text_button {
-  position: relative;
-  z-index: 10;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+}
 
-  background-image: linear-gradient(
-    90deg,
-    hsla(0 0% 100% / 1) 0%,
-    hsla(0 0% 100% / var(--active, 0)) 120%
-  );
-  background-clip: text;
-
-  font-size: 1rem;
-  color: transparent;
+.button .dots_border {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SKIN PRO - Colección 2025</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <style>
+        /* FLECHAS MENÚ */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-arrow:hover {
+            background: rgba(0, 180, 216, 0.2);
+            border-color: #00B4D8;
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.4);
+        }
+
+        .nav-arrow.left {
+            left: 4%;
+        }
+
+        .nav-arrow.right {
+            right: 4%;
+        }
+
+        .nav-arrow svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="stars-container">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+    </div>
+
+    <!-- TÍTULO SKIN PRO CON BLUR -->
+    <div id="title-menu">
+        <h1>SKIN PRO</h1>
+        <p>COLECCIÓN 2025</p>
+    </div>
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div id="progress-text">CARGANDO...</div>
+    </div>
+
+    <!-- Flechas -->
+    <div class="nav-arrow left" onclick="window.moveCarousel(1)">
+        <svg viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+    </div>
+    <div class="nav-arrow right" onclick="window.moveCarousel(-1)">
+        <svg viewBox="0 0 24 24">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+        </svg>
+    </div>
+
+    <script type="module" src="js/menu_script.js"></script>
+
+</body>
+
+</html>

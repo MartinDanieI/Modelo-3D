@@ -1,152 +1,209 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visor 3D - Colección Galáctica</title>
-    
-    <!-- Tailwind CSS para el diseño -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Enlace a tu hoja de estilos externa -->
-    <link rel="stylesheet" href="/css/style.css">
-
-</head>
-<body class="min-h-screen">
-
-    <!-- Contenedor del fondo estrellado -->
-    <div class="stars-container">
-        <div class="stars"></div>
-        <div class="stars2"></div>
-        <div class="stars3"></div>
-    </div>
-
-    <!-- Contenido principal -->
-    <div class="container mx-auto px-4 py-12 relative z-10">
-
-        <!-- Encabezado -->
-        <header class="text-center mb-16">
-            <h1 class="text-5xl md:text-7xl font-black uppercase title-glow tracking-widest">Colección Galáctica</h1>
-            <p class="text-lg md:text-xl text-blue-300 mt-4 max-w-2xl mx-auto">
-                Explora nuestros diseños exclusivos. Rota y acerca cada modelo para ver los detalles.
-            </p>
-        </header>
-
-        <!-- Grid de visualizadores 3D -->
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+	<head>
+		<title>Skin Pro - Intro</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body { margin: 0; background-color: #000; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
             
-            <!-- Visor 1 -->
-            <div class="card-glow bg-white rounded-2xl p-6 flex flex-col items-center">
-                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
-                    <canvas id="canvas-1"></canvas>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Camiseta Azul</h2>
-                <p class="text-gray-600">Haz resaltar la energía que llevas por dentro </p>
-            </div>
-
-            <!-- Visor 2 -->
-            <div class="card-glow bg-white rounded-2xl p-6 flex flex-col items-center">
-                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
-                    <canvas id="canvas-2"></canvas>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Camiseta Colombia</h2>
-                <p class="text-gray-600">Un clásico con un toque moderno</p>
-            </div>
-
-            <!-- Visor 3 -->
-            <div class="card-glow bg-white rounded-2xl p-6 flex flex-col items-center">
-                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
-                    <canvas id="canvas-3"></canvas>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Camiseta Morada</h2>
-                <p class="text-gray-600">Minimalista, elegante y misterioso.</p>
-            </div>
-
-            <!-- Visor 4 -->
-            <div class="card-glow bg-white rounded-2xl p-6 flex flex-col items-center">
-                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
-                    <canvas id="canvas-4"></canvas>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Camiseta Naranja</h2>
-                <p class="text-gray-600">Una explosión de color y estilo.</p>
-            </div>
-
-            <!-- Visor 5 -->
-            <div class="card-glow bg-white rounded-2xl p-6 flex flex-col items-center">
-                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
-                    <canvas id="canvas-5"></canvas>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Camiseta Roja</h2>
-                <p class="text-gray-600">Define tu presencia con poder.</p>
-            </div>
-            
-            <!-- Visor 6 -->
-            <div class="card-glow bg-white rounded-2xl p-6 flex flex-col items-center">
-                <div class="w-full h-64 rounded-lg overflow-hidden mb-4">
-                    <canvas id="canvas-6"></canvas>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Camiseta Verde</h2>
-                <p class="text-gray-600">Lleva a Colombia en el alma </p>
-            </div>
-            <a href="visor.html" class="button-link">
-  <button class="button">
-    <div class="dots_border"></div>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      class="sparkle"
-    >
-      <path
-        class="path"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        stroke="black"
-        fill="black"
-        d="M14.187 8.096L15 5.25L15.813 8.096C16.0231 8.83114 16.4171 9.50062 16.9577 10.0413C17.4984 10.5819 18.1679 10.9759 18.903 11.186L21.75 12L18.904 12.813C18.1689 13.0231 17.4994 13.4171 16.9587 13.9577C16.4181 14.4984 16.0241 15.1679 15.814 15.903L15 18.75L14.187 15.904C13.9769 15.1689 13.5829 14.4994 13.0423 13.9587C12.5016 13.4181 11.8321 13.0241 11.097 12.814L8.25 12L11.096 11.187C11.8311 10.9769 12.5006 10.5829 13.0413 10.0423C13.5819 9.50162 13.9759 8.83214 14.186 8.097L14.187 8.096Z"
-      ></path>
-      <path
-        class="path"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        stroke="black"
-        fill="black"
-        d="M6 14.25L5.741 15.285C5.59267 15.8785 5.28579 16.4206 4.85319 16.8532C4.42059 17.2858 3.87853 17.5927 3.285 17.741L2.25 18L3.285 18.259C3.87853 18.4073 4.42059 18.7142 4.85319 19.1468C5.28579 19.5794 5.59267 20.1215 5.741 20.715L6 21.75L6.259 20.715C6.40725 20.1216 6.71398 19.5796 7.14639 19.147C7.5788 18.7144 8.12065 18.4075 8.714 18.259L9.75 18L8.714 17.741C8.12065 17.5925 7.5788 17.2856 7.14639 16.853C6.71398 16.4204 6.40725 15.8784 6.259 15.285L6 14.25Z"
-      ></path>
-      <path
-        class="path"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        stroke="black"
-        fill="black"
-        d="M6.5 4L6.303 4.5915C6.24777 4.75718 6.15472 4.90774 6.03123 5.03123C5.90774 5.15472 5.75718 5.24777 5.5915 5.303L5 5.5L5.5915 5.697C5.75718 5.75223 5.90774 5.84528 6.03123 5.96877C6.15472 6.09226 6.24777 6.24282 6.303 6.4085L6.5 7L6.697 6.4085C6.75223 6.24282 6.84528 6.09226 6.96877 5.96877C7.09226 5.84528 7.24282 5.75223 7.4085 5.697L8 5.5L7.4085 5.303C7.24282 5.24777 7.09226 5.15472 6.96877 5.03123C6.84528 4.90774 6.75223 4.75718 6.697 4.5915L6.5 4Z"
-      ></path>
-    </svg>
-    <span class="text_button">MÁS INFORMACIÓN DE LAS CAMISETAS</span>
-  </button>
-</a>
-        </main>
-        
-    </div>
-    <!-- From Uiverse.io by MuhammadHasann --> 
-
-
-    <!-- Three.js (Librería para 3D) -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
-                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+            /* --- ESTILOS DE CARGA --- */
+            #loading {
+                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                color: white; font-size: 24px; pointer-events: none; z-index: 10;
+                text-shadow: 0 0 10px rgba(0,0,0,0.5);
             }
-        }
-    </script>
-    <!-- Enlace a tu script externo -->
-    <script type="module" src="/js/script.js"></script>
 
-</body>
+            /* --- ESTILOS DE LA INTERFAZ (TEXTO Y BOTÓN) --- */
+            #ui-container {
+                position: absolute;
+                bottom: 40px; 
+                left: 50%;
+                transform: translateX(-50%); 
+                text-align: center;
+                z-index: 20; 
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px; 
+            }
+
+            .credits {
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 14px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+                font-weight: 600;
+            }
+
+            .btn-continue {
+                background-color: #f37021; 
+                color: white;
+                border: none;
+                padding: 12px 40px;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 30px; 
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(243, 112, 33, 0.4);
+                text-decoration: none; 
+            }
+
+            .btn-continue:hover {
+                background-color: #d15b15; 
+                transform: scale(1.05); 
+                box-shadow: 0 6px 20px rgba(243, 112, 33, 0.6);
+            }
+
+		</style>
+	</head>
+	<body>
+
+        <div id="loading">Cargando Skin Pro...</div>
+
+        <div id="ui-container">
+            <div class="credits">Creado por: Martin Betancourt y Fabian Guerrero</div>
+            <button id="btn-next" class="btn-continue">CONTINUAR</button>
+        </div>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+					"three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+				}
+			}
+		</script>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+			import { Sky } from 'three/addons/objects/Sky.js';
+            import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+			let camera, scene, renderer;
+			let sky, sun;
+            let logoModel;
+
+			init();
+            animate();
+
+			function init() {
+
+                // --- AQUÍ ESTÁ EL CAMBIO PARA IR AL MENÚ ---
+                document.getElementById('btn-next').addEventListener('click', function() {
+                    // Redirige al archivo menu.html
+                    window.location.href = "menu.html"; 
+                });
+
+				// 1. CONFIGURACIÓN DE ESCENA
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 20000 );
+				camera.position.set( 0, 0, 15 );
+
+				scene = new THREE.Scene();
+
+				renderer = new THREE.WebGLRenderer({ antialias: true });
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+				renderer.toneMappingExposure = 0.5;
+				document.body.appendChild( renderer.domElement );
+
+				const controls = new OrbitControls( camera, renderer.domElement );
+				controls.enableDamping = true;
+                controls.enablePan = false; 
+                controls.minDistance = 5;
+                controls.maxDistance = 50;
+
+				initSky();
+
+                const ambientLight = new THREE.AmbientLight( 0xffffff, 0.8 );
+                scene.add( ambientLight );
+
+                const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
+                dirLight.position.set( -10, 10, -10 );
+                scene.add( dirLight );
+
+                // Carga del Logo
+                const loader = new GLTFLoader();
+                loader.load( './logo.glb', function ( gltf ) {
+                    logoModel = gltf.scene;
+                    const box = new THREE.Box3().setFromObject( logoModel );
+                    const center = box.getCenter( new THREE.Vector3() );
+                    const size = box.getSize( new THREE.Vector3() );
+
+                    logoModel.position.x += ( logoModel.position.x - center.x );
+                    logoModel.position.y += ( logoModel.position.y - center.y );
+                    logoModel.position.z += ( logoModel.position.z - center.z );
+
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scale = 8 / maxDim; 
+                    logoModel.scale.setScalar(scale);
+
+                    logoModel.traverse((child) => {
+                        if (child.isMesh) {
+                            child.material.envMapIntensity = 1.5; 
+                        }
+                    });
+
+                    scene.add( logoModel );
+                    document.getElementById('loading').style.display = 'none';
+
+                }, undefined, function ( error ) {
+                    console.error( error );
+                    document.getElementById('loading').innerText = 'Error: logo.glb no encontrado';
+                    document.getElementById('loading').style.color = '#ff3333';
+                } );
+
+				window.addEventListener( 'resize', onWindowResize );
+			}
+
+			function initSky() {
+				sky = new Sky();
+				sky.scale.setScalar( 450000 );
+				scene.add( sky );
+
+				sun = new THREE.Vector3();
+
+				const effectController = {
+					turbidity: 10,
+					rayleigh: 3,
+					mieCoefficient: 0.005,
+					mieDirectionalG: 0.7,
+					elevation: 2,   
+					azimuth: 180,
+					exposure: renderer.toneMappingExposure
+				};
+
+				const uniforms = sky.material.uniforms;
+				uniforms[ 'turbidity' ].value = effectController.turbidity;
+				uniforms[ 'rayleigh' ].value = effectController.rayleigh;
+				uniforms[ 'mieCoefficient' ].value = effectController.mieCoefficient;
+				uniforms[ 'mieDirectionalG' ].value = effectController.mieDirectionalG;
+
+				const phi = THREE.MathUtils.degToRad( 90 - effectController.elevation );
+				const theta = THREE.MathUtils.degToRad( effectController.azimuth );
+				sun.setFromSphericalCoords( 1, phi, theta );
+				uniforms[ 'sunPosition' ].value.copy( sun );
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+
+			function animate() {
+                requestAnimationFrame( animate );
+                if ( logoModel ) {
+                    logoModel.rotation.y += 0.005; 
+                }
+				renderer.render( scene, camera );
+			}
+
+		</script>
+	</body>
 </html>

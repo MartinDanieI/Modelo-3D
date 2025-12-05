@@ -1,491 +1,407 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visor 3D</title>
+    <title>SKIN PRO - Visualizador 3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap" rel="stylesheet">
+    
     <style>
         body {
             margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #1e1e1e; /* Color de fondo actualizado */
-            color: #fff;
-            display: flex;
-            height: 100vh;
             overflow: hidden;
-            /* Flexbox para la vista de escritorio */
-            flex-direction: row; 
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
         }
 
-        #viewer-container {
-            flex-grow: 1;
-            background-color: #333;
-            position: relative;
-            /* La altura se gestiona en la media query para móviles */
-        }
-
-        #canvas {
-            display: block;
+        /* --- PANTALLA DE CARGA --- */
+        #loading-screen {
+            position: absolute;
             width: 100%;
             height: 100%;
-        }
-
-        #sidebar {
-            width: 380px;
-            background-color: #2b2b2b;
-            padding: 20px;
-            box-sizing: border-box;
+            background: #000;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            /* La posición de la barra lateral se gestiona en la media query para móviles */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
         }
 
-        h3 {
-            margin-top: 0;
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-            font-weight: 500;
+        .loader {
+            border: 5px solid #333;
+            border-top: 5px solid #ff6600; /* Naranja SkinPro */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
         }
 
-        .control-section {
-            margin-bottom: 30px;
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        #progress-text {
+            color: white;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .theme-button {
-            width: 100%;
-            height: 40px;
-            border: 2px solid #555;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .theme-button:hover {
-            border-color: #0078d4;
-        }
-        
-        .slider-container label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            cursor: pointer;
-        }
-
-        /* Contenedor de los botones de colores */
-        #model-switcher {
+        /* --- UI BOTONES DE COLORES (AHORA ABAJO) --- */
+        #ui-controls {
             position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 50%;           /* Centrado horizontal */
+            bottom: 40px;        /* Pegado abajo */
+            transform: translateX(-50%); /* Ajuste fino de centro */
             display: flex;
-            gap: 10px;
-            background-color: rgba(40, 40, 40, 0.7);
-            padding: 8px;
-            border-radius: 12px;
-            z-index: 10;
+            flex-direction: row; /* Horizontal */
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+            background: rgba(20, 20, 20, 0.8); /* Fondo oscuro más sólido */
+            padding: 15px 30px;
+            border-radius: 50px; /* Bordes muy redondos (estilo cápsula) */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .color-button {
-            width: 30px;
-            height: 30px;
-            border: 2px solid #555;
+        .color-btn {
+            width: 35px;         /* Un poco más grandes */
+            height: 35px;
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
-        .color-button:hover {
-            transform: scale(1.1);
-            border-color: #00aaff;
+        .color-btn:hover {
+            transform: scale(1.2);
+            border-color: white;
         }
 
-        .color-button.active {
-            border-color: #ffffff;
-            transform: scale(1.15);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        /* Separador vertical */
+        .separator {
+            width: 1px; 
+            height: 30px; 
+            background: rgba(255,255,255,0.2); 
+            margin: 0 10px;
         }
 
-        /* Cuadro de descripción */
-        #description-box {
-            background-color: #3a3a3a;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
+        /* --- CUADRO DE INFORMACIÓN (BAJADO PARA NO TAPAR CONTROLES) --- */
+        #info-panel {
+            position: absolute;
+            top: 100px; /* <--- BAJADO (Antes 30px) para dejar espacio al GUI */
+            right: 20px;
+            width: 300px;
+            background: rgba(20, 20, 20, 0.75); 
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            max-height: 70vh;
+            overflow-y: auto;
+            z-index: 90; /* Z-index menor que el GUI (que suele ser 1000) */
+            transition: all 0.3s ease;
         }
 
-        #description-box h3 {
+        #info-panel h2 {
             margin-top: 0;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #555;
+            font-size: 22px;
+            border-bottom: 2px solid #ff6600;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 800;
         }
 
         #model-description {
-            font-size: 16px; 
+            font-size: 14px;
             line-height: 1.6;
-            color: #e0e0e0; 
-            min-height: 50px;
-        }
-        
-        /* Estilos del botón de Logout */
-        .Btn {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            width: 45px;
-            height: 45px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition-duration: .3s;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-            background-color: rgb(255, 65, 65);
+            color: #e0e0e0;
         }
 
-        .sign {
-            width: 100%;
-            transition-duration: .3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        #model-description b {
+            color: #ffaa66;
         }
 
-        .sign svg {
-            width: 17px;
-        }
-
-        .sign svg path {
-            fill: white;
-        }
-
-        .text {
-            position: absolute;
-            right: 0%;
-            width: 0%;
-            opacity: 0;
+        /* Botón de volver (Estilo texto como en la imagen) */
+        .text-button {
+            text-decoration: none;
             color: white;
-            font-size: 1.2em;
-            font-weight: 600;
-            transition-duration: .3s;
-        }
-
-        .Btn:hover {
-            width: 125px;
-            border-radius: 40px;
-            transition-duration: .3s;
-        }
-
-        .Btn:hover .sign {
-            width: 30%;
-            transition-duration: .3s;
-            padding-left: 20px;
-        }
-
-        .Btn:hover .text {
-            opacity: 1;
-            width: 70%;
-            transition-duration: .3s;
-            padding-right: 10px;
-        }
-
-        .Btn:active {
-            transform: translate(2px ,2px);
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        /* --- MEDIA QUERIES PARA RESPONSIVE --- */
+        .text-button:hover {
+            color: #ff6600;
+        }
+
+        /* Responsive para móviles */
         @media (max-width: 768px) {
-            body {
-                /* Para móviles, cambia la dirección del flexbox a columna */
-                flex-direction: column;
-                overflow-y: auto; /* Permite scroll vertical */
+            #info-panel {
+                top: auto; /* Anular el top */
+                bottom: 120px; /* Subirlo para que no tape los botones */
+                right: 20px;
+                left: 20px;
+                width: auto;
+                max-height: 30vh;
             }
-
-            #viewer-container {
-                /* Ocupa el 100% del ancho y una porción de la altura */
-                width: 100%;
-                height: 50vh; /* Ajusta la altura del visor en móviles */
-                flex-grow: 0; /* Deshabilita el crecimiento */
-            }
-
-            #sidebar {
-                /* Ocupa el 100% del ancho y lo que queda de altura */
-                width: 100%;
-                height: 50vh;
-                padding: 15px; /* Reduce el padding para pantallas más pequeñas */
-            }
-
-            #model-switcher {
-                /* Ajusta el espaciado y el padding para móviles */
-                gap: 5px;
-                padding: 6px;
-            }
-
-            .color-button {
-                /* Reduce el tamaño de los botones para que quepan mejor */
-                width: 25px;
-                height: 25px;
-            }
-
-            h3 {
-                font-size: 1.2em;
-            }
-
-            .slider-container label, #model-description {
-                font-size: 13px;
+            #ui-controls {
+                width: 90%;
+                justify-content: center;
+                bottom: 20px;
+                padding: 10px;
             }
         }
     </style>
-</head>
-<body>
-    <div id="viewer-container">
-        <div id="model-switcher"></div>
-        <canvas id="canvas"></canvas>
-    </div>
-    <div id="sidebar">
-        <div class="control-section">
-            <h3>Rotación de la luz</h3>
-            <div class="slider-container">
-                <label for="light-rotation">Posición de la luz</label>
-                <input type="range" id="light-rotation" min="-180" max="180" value="45">
-            </div>
-        </div>
-        <div id="description-box" class="control-section">
-            <h3>Descripción</h3>
-            <p id="model-description">Selecciona un modelo para ver su descripción.</p>
-        </div>
-        <a href="index.html">
-            <button class="Btn">
-                <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-                <div class="text">Logout</div>
-            </button>
-        </a>
-    </div>
+
     <script type="importmap">
         {
             "imports": {
-                "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.165.0/examples/jsm/"
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
             }
         }
     </script>
+</head>
+
+<body>
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div id="progress-text">CARGANDO...</div>
+    </div>
+
+    <div id="ui-controls">
+        <div class="color-btn" style="background: #00BFFF; box-shadow: 0 0 10px #00BFFF;" onclick="cambiarCamisa('celeste')"></div>
+        <div class="color-btn" style="background: #FFD700; box-shadow: 0 0 10px #FFD700;" onclick="cambiarCamisa('colombia')"></div>
+        <div class="color-btn" style="background: #800080; box-shadow: 0 0 10px #800080;" onclick="cambiarCamisa('morada')"></div>
+        <div class="color-btn" style="background: #FF4500; box-shadow: 0 0 10px #FF4500;" onclick="cambiarCamisa('naranja')"></div>
+        <div class="color-btn" style="background: #FF0000; box-shadow: 0 0 10px #FF0000;" onclick="cambiarCamisa('roja')"></div>
+        <div class="color-btn" style="background: #008000; box-shadow: 0 0 10px #008000;" onclick="cambiarCamisa('verde')"></div>
+        
+        <div class="separator"></div>
+
+        <a href="index.html" class="text-button">
+            Volver al Menú
+        </a>
+    </div>
+
+    <div id="info-panel">
+        <h2 id="model-title">Cargando...</h2>
+        <div id="model-description"></div>
+    </div>
+
     <script type="module">
-       import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { Water } from 'three/addons/objects/Water.js';
+        import { Sky } from 'three/addons/objects/Sky.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-// --- Base de datos de tus modelos ---
-const modelsInfo = [
-    { 
-        id: 'colombia', 
-        name: 'Jersey Colombia SkinPro', 
-        path: 'camisetas/Camisa_colombia.glb', 
-        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
-        color: '#f7d754' 
-    },
-    { 
-        id: 'azul', 
-        name: 'Jersey Azul SkinPro', 
-        path: 'camisetas/Camisa_celeste.glb', 
-        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
-        color: '#00aaff' 
-    },
-    { 
-        id: 'morada', 
-        name: 'Jersey Morado SkinPro', 
-        path: 'camisetas/Camisa_morada.glb', 
-        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
-        color: '#572364' 
-    },
-    { 
-        id: 'naranja', 
-        name: 'Jersey Naranja SkinPro', 
-        path: 'camisetas/Camisa_naranja.glb', 
-        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
-        color: '#FF8000' 
-    },
-    { 
-        id: 'roja', 
-        name: 'Jersey Rojo SkinPro', 
-        path: 'camisetas/Camisa_roja.glb', 
-        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
-        color: '#ff0000' 
-    },
-    { 
-        id: 'verde', 
-        name: 'Jersey Verde SkinPro', 
-        path: 'camisetas/Camisa_verde.glb', 
-        description: '<b>Tipo:</b> Jersey de Ciclismo\n<b>Tecnología:</b> Protección rayos UV, Anti-manchas de sudor, Absorción y secado rápido, Colores más vivos\n<b>Confección:</b> Tres bolsillos traseros con zonas de estiramiento estratégicamente ubicadas\n<b>Material:</b> Textil respirable, totalmente liviano, maleable y cómodo\n<b>Estampado:</b> Temática Astronauta / Espacio', 
-        color: '#00a125' 
-    }
-];
-
-// --- CONFIGURACIÓN DE LA ESCENA ---
-const canvas = document.querySelector('#canvas');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xdadada);
-scene.fog = new THREE.Fog(scene.background, 5, 40);
-const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 0.8, 3.5);
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-
-// --- LUCES ---
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-scene.add(ambientLight);
-const directionalLight = new THREE.DirectionalLight(0xffffff, 3.5);
-directionalLight.position.set(1.5, 2, 2.5);
-directionalLight.castShadow = true;
-directionalLight.shadow.mapSize.width = 1024;
-directionalLight.shadow.mapSize.height = 1024;
-scene.add(directionalLight);
-
-// --- SUELO ---
-const groundGeometry = new THREE.PlaneGeometry(100, 100);
-const groundMaterial = new THREE.MeshStandardMaterial({
-    color: 0x9a9a9a,
-    roughness: 0.8,
-    metalness: 0.1
-});
-const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-ground.rotation.x = -Math.PI / 2;
-ground.position.y = -2;
-ground.receiveShadow = true;
-scene.add(ground);
-
-// --- LÓGICA DE CARGA Y ESTADO ---
-const loader = new GLTFLoader();
-let currentModel;
-let isLoading = false; // Variable para evitar que se amontonen los modelos
-
-// Función para limpiar la memoria de la GPU
-function disposeModel(model) {
-    if (!model) return;
-    model.traverse((child) => {
-        if (child.isMesh) {
-            child.geometry.dispose();
-            if (child.material.isMaterial) child.material.dispose();
-            if (child.material.map) child.material.map.dispose();
-        }
-    });
-}
-
-function loadModel(modelInfo) {
-    if (currentModel) {
-        disposeModel(currentModel);
-        scene.remove(currentModel);
-    }
-
-    loader.load(modelInfo.path, (gltf) => {
-        currentModel = gltf.scene;
-        currentModel.traverse((node) => {
-            if (node.isMesh) {
-                node.castShadow = true;
-                node.receiveShadow = true;
+        // --- BASE DE DATOS DE INFORMACIÓN ---
+        const modelsInfo = [
+            { 
+                id: 'colombia', 
+                name: 'Jersey Colombia', 
+                description: '<b>Edición:</b> Selección Colombia\n<b>Tecnología:</b> Protección UV, secado rápido.\n<b>Detalles:</b> Tricolor nacional con patrón geométrico.\n<b>Material:</b> Poliéster transpirable de alta gama.'
+            },
+            { 
+                id: 'celeste', 
+                name: 'Jersey Azul Pro', 
+                description: '<b>Tipo:</b> Jersey de Ciclismo Profesional\n<b>Tecnología:</b> Absorción y secado rápido.\n<b>Confección:</b> Tres bolsillos traseros ergonómicos.\n<b>Material:</b> Textil liviano y aerodinámico.'
+            },
+            { 
+                id: 'morada', 
+                name: 'Jersey Morado Elite', 
+                description: '<b>Estilo:</b> Elite Performance\n<b>Color:</b> Púrpura profundo con detalles neón.\n<b>Uso:</b> Ideal para rutas largas y clima variable.\n<b>Ajuste:</b> Fit de competición.'
+            },
+            { 
+                id: 'naranja', 
+                name: 'Jersey Naranja Energy', 
+                description: '<b>Visibilidad:</b> Alta visibilidad en carretera.\n<b>Tecnología:</b> Anti-manchas de sudor.\n<b>Diseño:</b> Inspirado en la energía cinética.\n<b>Comodidad:</b> Costuras planas para evitar roces.'
+            },
+            { 
+                id: 'roja', 
+                name: 'Jersey Rojo Fire', 
+                description: '<b>Colección:</b> Fire Series\n<b>Características:</b> Malla lateral para ventilación extra.\n<b>Protección:</b> Factor UV 50+.\n<b>Resistencia:</b> Colores vivos que no destiñen.'
+            },
+            { 
+                id: 'verde', 
+                name: 'Jersey Verde Nature', 
+                description: '<b>Concepto:</b> Conexión con la montaña.\n<b>Material:</b> Fibras recicladas de alto rendimiento.\n<b>Bolsillos:</b> Cremallera de seguridad trasera.\n<b>Sensación:</b> Segunda piel.'
             }
+        ];
+
+        // 1. SETUP ESCENA
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        document.body.appendChild(renderer.domElement);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 20000);
+        camera.position.set(0, 15, 45);
+
+        // 2. OCÉANO Y CIELO
+        const sun = new THREE.Vector3();
+        const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
+        const water = new Water(waterGeometry, {
+            textureWidth: 512, textureHeight: 512,
+            waterNormals: new THREE.TextureLoader().load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/waternormals.jpg', function (texture) {
+                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+            }),
+            sunDirection: new THREE.Vector3(),
+            sunColor: 0xffffff,
+            waterColor: 0x001e0f,
+            distortionScale: 3.7
         });
-        const box = new THREE.Box3().setFromObject(currentModel);
-        const center = box.getCenter(new THREE.Vector3());
-        currentModel.position.sub(center);
-        scene.add(currentModel);
-        
-        isLoading = false;
-        modelSwitcher.style.pointerEvents = 'auto';
-        modelSwitcher.style.opacity = '1';
+        water.rotation.x = - Math.PI / 2;
+        scene.add(water);
 
-    }, undefined, (error) => {
-        console.error("Error al cargar el modelo:", error);
-        isLoading = false;
-        modelSwitcher.style.pointerEvents = 'auto';
-        modelSwitcher.style.opacity = '1';
-    });
-}
+        const sky = new Sky();
+        sky.scale.setScalar(10000);
+        scene.add(sky);
 
-// --- LÓGICA DE LA INTERFAZ ---
-const modelSwitcher = document.getElementById('model-switcher');
-const modelDescription = document.getElementById('model-description');
+        const parameters = {
+            elevation: 2,
+            azimuth: 180,
+            waterColor: '#001e0f',
+            sunColor: '#ffffff'
+        };
 
-function updateUI(modelInfo) {
-    modelDescription.innerHTML = modelInfo.description.replace(/\n/g, '<br>');
-    document.querySelectorAll('.color-button').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.modelId === modelInfo.id) {
-            btn.classList.add('active');
+        const pmremGenerator = new THREE.PMREMGenerator(renderer);
+
+        function updateSun() {
+            const phi = THREE.MathUtils.degToRad(90 - parameters.elevation);
+            const theta = THREE.MathUtils.degToRad(parameters.azimuth);
+            sun.setFromSphericalCoords(1, phi, theta);
+
+            sky.material.uniforms['sunPosition'].value.copy(sun);
+            water.material.uniforms['sunDirection'].value.copy(sun).normalize();
+            scene.environment = pmremGenerator.fromScene(sky).texture;
         }
-    });
-}
+        updateSun();
 
-modelsInfo.forEach(model => {
-    const button = document.createElement('button');
-    button.className = 'color-button';
-    button.style.backgroundColor = model.color;
-    button.dataset.modelId = model.id;
-    button.title = model.name;
-    
-    button.addEventListener('click', () => {
-        if (isLoading) return;
+        // 3. CARGA DE MODELOS
+        const manager = new THREE.LoadingManager();
+        manager.onLoad = () => {
+            const screen = document.getElementById('loading-screen');
+            screen.style.opacity = '0';
+            setTimeout(() => screen.style.display = 'none', 500);
+        };
         
-        isLoading = true;
-        modelSwitcher.style.pointerEvents = 'none';
-        modelSwitcher.style.opacity = '0.5';
+        const loader = new GLTFLoader(manager);
+        let currentMesh = null;
 
-        loadModel(model);
-        updateUI(model);
-    });
-    
-    modelSwitcher.appendChild(button);
-});
+        // CONTROLES DE CÁMARA
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.maxPolarAngle = Math.PI * 0.495;
+        controls.minDistance = 20;
+        controls.maxDistance = 150;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 1.0;
+        controls.enableDamping = true;
 
-// --- BUCLE DE ANIMACIÓN Y RESPONSIVIDAD ---
-function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    if (currentModel) {
-        currentModel.rotation.y += 0.005;
-    }
-    renderer.render(scene, camera);
-}
+        // FUNCIÓN PRINCIPAL PARA CAMBIAR CAMISA E INFORMACIÓN
+        window.cambiarCamisa = function (id) {
+            
+            // 1. Cargar el modelo 3D
+            const ruta = `camisetas/Camisa_${id}.glb`;
 
-function onWindowResize() {
-    const container = document.getElementById('viewer-container');
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-}
-window.addEventListener('resize', onWindowResize);
-onWindowResize();
+            loader.load(ruta, (gltf) => {
+                if (currentMesh) scene.remove(currentMesh);
 
-// --- CARGA INICIAL Y EVENT LISTENERS ---
-if (modelsInfo.length > 0) {
-    isLoading = true;
-    modelSwitcher.style.pointerEvents = 'none';
-    modelSwitcher.style.opacity = '0.5';
-    loadModel(modelsInfo[0]);
-    updateUI(modelsInfo[0]);
-}
+                const model = gltf.scene;
+                model.scale.set(5, 5, 5);
+                model.position.set(0, 8, 0);
 
-animate();
+                model.traverse(child => {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                });
 
-// Event listener para el control de la luz
-document.getElementById('light-rotation').addEventListener('input', (event) => {
-    const angle = event.target.value * (Math.PI / 180);
-    directionalLight.position.x = Math.sin(angle) * 2.5;
-    directionalLight.position.z = Math.cos(angle) * 2.5;
-});
+                currentMesh = model;
+                scene.add(currentMesh);
+
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                controls.target.copy(center);
+                controls.update();
+            }, undefined, function(error) {
+                console.error("Error cargando modelo:", error);
+            });
+
+            // 2. Actualizar el Panel de Información
+            const info = modelsInfo.find(m => m.id === id);
+            const titleEl = document.getElementById('model-title');
+            const descEl = document.getElementById('model-description');
+
+            // Efecto de desvanecimiento simple para el texto
+            titleEl.style.opacity = 0;
+            descEl.style.opacity = 0;
+
+            setTimeout(() => {
+                if (info) {
+                    titleEl.innerText = info.name;
+                    descEl.innerHTML = info.description.replace(/\n/g, '<br>');
+                } else {
+                    titleEl.innerText = "Modelo Desconocido";
+                    descEl.innerHTML = "No hay información disponible para este modelo.";
+                }
+                titleEl.style.opacity = 1;
+                descEl.style.opacity = 1;
+            }, 300);
+        };
+
+        // Carga inicial
+        const params = new URLSearchParams(window.location.search);
+        const modeloInicial = params.get('modelo') || 'celeste';
+        cambiarCamisa(modeloInicial);
+
+        // --- CONTROLES GUI (AGREGADOS NUEVAMENTE) ---
+        const gui = new GUI();
+        
+        // Carpeta Clima (Sol)
+        const folderSky = gui.addFolder('Clima');
+        folderSky.add(parameters, 'elevation', 0, 90, 0.1).name('Altura Sol').onChange(updateSun);
+        folderSky.add(parameters, 'azimuth', -180, 180, 0.1).name('Rotación Sol').onChange(updateSun);
+        
+        // Carpeta Océano (Agregada de nuevo)
+        const folderWater = gui.addFolder('Océano');
+        folderWater.add(water.material.uniforms.distortionScale, 'value', 0, 8, 0.1).name('Turbulencia');
+        folderWater.add(water.material.uniforms.size, 'value', 0.1, 10, 0.1).name('Tamaño Olas');
+        folderWater.open(); // Mantener abierta para ver
+
+        // 5. ANIMACIÓN
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = performance.now() * 0.001;
+
+            if (currentMesh) {
+                currentMesh.position.y = Math.sin(time) * 1.5 + 8; // Flotar
+            }
+
+            water.material.uniforms['time'].value += 1.0 / 60.0;
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
 </html>
