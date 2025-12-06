@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>SKIN PRO - Visualizador 3D</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             margin: 0;
@@ -30,7 +30,8 @@
 
         .loader {
             border: 5px solid #333;
-            border-top: 5px solid #ff6600; /* Naranja SkinPro */
+            border-top: 5px solid #ff6600;
+            /* Naranja SkinPro */
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -38,7 +39,15 @@
             margin-bottom: 20px;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         #progress-text {
             color: white;
@@ -46,31 +55,37 @@
             letter-spacing: 2px;
         }
 
-        /* --- UI BOTONES DE COLORES (AHORA ABAJO) --- */
+        /* --- UI BOTONES DE COLORES (REVERTIDO A ABAJO) --- */
         #ui-controls {
             position: absolute;
-            left: 50%;           /* Centrado horizontal */
-            bottom: 40px;        /* Pegado abajo */
-            transform: translateX(-50%); /* Ajuste fino de centro */
+            left: 50%;
+            /* Centrado horizontal */
+            bottom: 40px;
+            /* Pegado abajo */
+            transform: translateX(-50%);
+            /* Ajuste fino de centro */
             display: flex;
-            flex-direction: row; /* Horizontal */
+            flex-direction: row;
+            /* Horizontal */
             align-items: center;
             gap: 15px;
             z-index: 100;
-            background: rgba(20, 20, 20, 0.8); /* Fondo oscuro más sólido */
+            background: rgba(20, 20, 20, 0.8);
+            /* Fondo oscuro más sólido */
             padding: 15px 30px;
-            border-radius: 50px; /* Bordes muy redondos (estilo cápsula) */
+            border-radius: 50px;
+            /* Bordes muy redondos (estilo cápsula) */
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .color-btn {
-            width: 35px;         /* Un poco más grandes */
+            width: 35px;
             height: 35px;
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
@@ -79,21 +94,29 @@
             border-color: white;
         }
 
-        /* Separador vertical */
+        /* Separador vertical (REVERTIDO) */
         .separator {
-            width: 1px; 
-            height: 30px; 
-            background: rgba(255,255,255,0.2); 
+            width: 1px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
             margin: 0 10px;
+        }
+
+        /* --- MOVER GUI (SOL) A LA IZQUIERDA --- */
+        .lil-gui.root {
+            right: auto !important;
+            left: 15px !important;
+            top: 15px !important;
         }
 
         /* --- CUADRO DE INFORMACIÓN (BAJADO PARA NO TAPAR CONTROLES) --- */
         #info-panel {
             position: absolute;
-            top: 100px; /* <--- BAJADO (Antes 30px) para dejar espacio al GUI */
+            top: 100px;
+            /* <--- BAJADO (Antes 30px) para dejar espacio al GUI */
             right: 20px;
             width: 300px;
-            background: rgba(20, 20, 20, 0.75); 
+            background: rgba(20, 20, 20, 0.75);
             backdrop-filter: blur(10px);
             padding: 25px;
             border-radius: 15px;
@@ -102,7 +125,8 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             max-height: 70vh;
             overflow-y: auto;
-            z-index: 90; /* Z-index menor que el GUI (que suele ser 1000) */
+            z-index: 90;
+            /* Z-index menor que el GUI (que suele ser 1000) */
             transition: all 0.3s ease;
         }
 
@@ -136,7 +160,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .text-button:hover {
             color: #ff6600;
         }
@@ -144,13 +168,16 @@
         /* Responsive para móviles */
         @media (max-width: 768px) {
             #info-panel {
-                top: auto; /* Anular el top */
-                bottom: 120px; /* Subirlo para que no tape los botones */
+                top: auto;
+                /* Anular el top */
+                bottom: 120px;
+                /* Subirlo para que no tape los botones */
                 right: 20px;
                 left: 20px;
                 width: auto;
                 max-height: 30vh;
             }
+
             #ui-controls {
                 width: 90%;
                 justify-content: center;
@@ -178,13 +205,19 @@
     </div>
 
     <div id="ui-controls">
-        <div class="color-btn" style="background: #00BFFF; box-shadow: 0 0 10px #00BFFF;" onclick="cambiarCamisa('celeste')"></div>
-        <div class="color-btn" style="background: #FFD700; box-shadow: 0 0 10px #FFD700;" onclick="cambiarCamisa('colombia')"></div>
-        <div class="color-btn" style="background: #800080; box-shadow: 0 0 10px #800080;" onclick="cambiarCamisa('morada')"></div>
-        <div class="color-btn" style="background: #FF4500; box-shadow: 0 0 10px #FF4500;" onclick="cambiarCamisa('naranja')"></div>
-        <div class="color-btn" style="background: #FF0000; box-shadow: 0 0 10px #FF0000;" onclick="cambiarCamisa('roja')"></div>
-        <div class="color-btn" style="background: #008000; box-shadow: 0 0 10px #008000;" onclick="cambiarCamisa('verde')"></div>
-        
+        <div class="color-btn" style="background: #00BFFF; box-shadow: 0 0 10px #00BFFF;"
+            onclick="cambiarCamisa('celeste')"></div>
+        <div class="color-btn" style="background: #FFD700; box-shadow: 0 0 10px #FFD700;"
+            onclick="cambiarCamisa('colombia')"></div>
+        <div class="color-btn" style="background: #800080; box-shadow: 0 0 10px #800080;"
+            onclick="cambiarCamisa('morada')"></div>
+        <div class="color-btn" style="background: #FF4500; box-shadow: 0 0 10px #FF4500;"
+            onclick="cambiarCamisa('naranja')"></div>
+        <div class="color-btn" style="background: #FF0000; box-shadow: 0 0 10px #FF0000;"
+            onclick="cambiarCamisa('roja')"></div>
+        <div class="color-btn" style="background: #008000; box-shadow: 0 0 10px #008000;"
+            onclick="cambiarCamisa('verde')"></div>
+
         <div class="separator"></div>
 
         <a href="index.html" class="text-button">
@@ -207,34 +240,34 @@
 
         // --- BASE DE DATOS DE INFORMACIÓN ---
         const modelsInfo = [
-            { 
-                id: 'colombia', 
-                name: 'Jersey Colombia', 
+            {
+                id: 'colombia',
+                name: 'Jersey Colombia',
                 description: '<b>Edición:</b> Selección Colombia\n<b>Tecnología:</b> Protección UV, secado rápido.\n<b>Detalles:</b> Tricolor nacional con patrón geométrico.\n<b>Material:</b> Poliéster transpirable de alta gama.'
             },
-            { 
-                id: 'celeste', 
-                name: 'Jersey Azul Pro', 
+            {
+                id: 'celeste',
+                name: 'Jersey Azul Pro',
                 description: '<b>Tipo:</b> Jersey de Ciclismo Profesional\n<b>Tecnología:</b> Absorción y secado rápido.\n<b>Confección:</b> Tres bolsillos traseros ergonómicos.\n<b>Material:</b> Textil liviano y aerodinámico.'
             },
-            { 
-                id: 'morada', 
-                name: 'Jersey Morado Elite', 
+            {
+                id: 'morada',
+                name: 'Jersey Morado Elite',
                 description: '<b>Estilo:</b> Elite Performance\n<b>Color:</b> Púrpura profundo con detalles neón.\n<b>Uso:</b> Ideal para rutas largas y clima variable.\n<b>Ajuste:</b> Fit de competición.'
             },
-            { 
-                id: 'naranja', 
-                name: 'Jersey Naranja Energy', 
+            {
+                id: 'naranja',
+                name: 'Jersey Naranja Energy',
                 description: '<b>Visibilidad:</b> Alta visibilidad en carretera.\n<b>Tecnología:</b> Anti-manchas de sudor.\n<b>Diseño:</b> Inspirado en la energía cinética.\n<b>Comodidad:</b> Costuras planas para evitar roces.'
             },
-            { 
-                id: 'roja', 
-                name: 'Jersey Rojo Fire', 
+            {
+                id: 'roja',
+                name: 'Jersey Rojo Fire',
                 description: '<b>Colección:</b> Fire Series\n<b>Características:</b> Malla lateral para ventilación extra.\n<b>Protección:</b> Factor UV 50+.\n<b>Resistencia:</b> Colores vivos que no destiñen.'
             },
-            { 
-                id: 'verde', 
-                name: 'Jersey Verde Nature', 
+            {
+                id: 'verde',
+                name: 'Jersey Verde Nature',
                 description: '<b>Concepto:</b> Conexión con la montaña.\n<b>Material:</b> Fibras recicladas de alto rendimiento.\n<b>Bolsillos:</b> Cremallera de seguridad trasera.\n<b>Sensación:</b> Segunda piel.'
             }
         ];
@@ -273,8 +306,11 @@
         const parameters = {
             elevation: 2,
             azimuth: 180,
-            waterColor: '#001e0f',
-            sunColor: '#ffffff'
+            turbidity: 10,
+            rayleigh: 3,
+            mieCoefficient: 0.005,
+            mieDirectionalG: 0.7,
+            exposure: renderer.toneMappingExposure
         };
 
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
@@ -285,7 +321,20 @@
             sun.setFromSphericalCoords(1, phi, theta);
 
             sky.material.uniforms['sunPosition'].value.copy(sun);
+            sky.material.uniforms['turbidity'].value = parameters.turbidity;
+            sky.material.uniforms['rayleigh'].value = parameters.rayleigh;
+            sky.material.uniforms['mieCoefficient'].value = parameters.mieCoefficient;
+            sky.material.uniforms['mieDirectionalG'].value = parameters.mieDirectionalG;
+
             water.material.uniforms['sunDirection'].value.copy(sun).normalize();
+
+            // Si es de noche (elevación baja), reducir intensidad del ambiente
+            if (parameters.elevation < 0) {
+                renderer.toneMappingExposure = 0.2;
+            } else {
+                renderer.toneMappingExposure = parameters.exposure;
+            }
+
             scene.environment = pmremGenerator.fromScene(sky).texture;
         }
         updateSun();
@@ -297,7 +346,7 @@
             screen.style.opacity = '0';
             setTimeout(() => screen.style.display = 'none', 500);
         };
-        
+
         const loader = new GLTFLoader(manager);
         let currentMesh = null;
 
@@ -312,7 +361,7 @@
 
         // FUNCIÓN PRINCIPAL PARA CAMBIAR CAMISA E INFORMACIÓN
         window.cambiarCamisa = function (id) {
-            
+
             // 1. Cargar el modelo 3D
             const ruta = `camisetas/Camisa_${id}.glb`;
 
@@ -337,7 +386,7 @@
                 const center = box.getCenter(new THREE.Vector3());
                 controls.target.copy(center);
                 controls.update();
-            }, undefined, function(error) {
+            }, undefined, function (error) {
                 console.error("Error cargando modelo:", error);
             });
 
@@ -370,17 +419,68 @@
 
         // --- CONTROLES GUI (AGREGADOS NUEVAMENTE) ---
         const gui = new GUI();
-        
-        // Carpeta Clima (Sol)
-        const folderSky = gui.addFolder('Clima');
-        folderSky.add(parameters, 'elevation', 0, 90, 0.1).name('Altura Sol').onChange(updateSun);
+
+        // Carpeta Clima (Sol) - AHORA SUPER CATERGADA
+        const folderSky = gui.addFolder('Clima Avanzado');
+        folderSky.add(parameters, 'elevation', -10, 90, 0.1).name('Hora (Elevación Sol)').onChange(updateSun);
         folderSky.add(parameters, 'azimuth', -180, 180, 0.1).name('Rotación Sol').onChange(updateSun);
-        
+        folderSky.add(parameters, 'exposure', 0, 1, 0.001).name('Exposición (Luz)').onChange(updateSun);
+
+        // Opciones avanzadas de atmósfera
+        folderSky.add(parameters, 'turbidity', 0.0, 20.0, 0.1).name('Niebla/Turbidez').onChange(updateSun);
+        folderSky.add(parameters, 'rayleigh', 0.0, 4, 0.001).name('Dispersión (Cielo)').onChange(updateSun);
+        folderSky.add(parameters, 'mieCoefficient', 0.0, 0.1, 0.001).name('Brillo Sol').onChange(updateSun);
+        folderSky.add(parameters, 'mieDirectionalG', 0.0, 1, 0.001).name('Halo Solar').onChange(updateSun);
+        folderSky.open();
+
         // Carpeta Océano (Agregada de nuevo)
         const folderWater = gui.addFolder('Océano');
         folderWater.add(water.material.uniforms.distortionScale, 'value', 0, 8, 0.1).name('Turbulencia');
         folderWater.add(water.material.uniforms.size, 'value', 0.1, 10, 0.1).name('Tamaño Olas');
         folderWater.open(); // Mantener abierta para ver
+
+
+
+        // --- PARÁMETROS DE ANIMACIÓN ---
+        const animParams = {
+            cameraSpeed: 1.0,
+            shirtRotationSpeed: 0.0, // Por defecto quieta, pero configurable
+            shirtFloatSpeed: 1.0,    // Velocidad de la flotación
+            stopAll: false           // Botón de pánico para detener todo
+        };
+
+
+
+        // ... (Código existente de Clima - se mantiene igual, no lo toco en este replace) ...
+
+        const folderAnim = gui.addFolder('Animación & Movimiento');
+
+        folderAnim.add(animParams, 'cameraSpeed', 0, 10, 0.1).name('Giro Cámara').onChange(v => {
+            controls.autoRotateSpeed = v;
+        });
+
+        folderAnim.add(animParams, 'shirtRotationSpeed', -5, 5, 0.1).name('Giro Camisa');
+
+        folderAnim.add(animParams, 'shirtFloatSpeed', 0, 5, 0.1).name('Velocidad Flote');
+
+        folderAnim.add(animParams, 'stopAll').name('⏹ DETENER TODO').onChange(v => {
+            if (v) {
+                // Guardar valores previos si se quisiera restaurar, 
+                // para simplificar, ponemos los controles a 0 visualmente
+                controls.autoRotate = false;
+                animParams.shirtRotationSpeed = 0;
+                animParams.shirtFloatSpeed = 0;
+                // Actualizar GUI para reflejar
+                gui.controllersRecursive().forEach(c => c.updateDisplay());
+            } else {
+                controls.autoRotate = true;
+                animParams.cameraSpeed = 1.0; // Restaurar valores por defecto o previos
+                animParams.shirtFloatSpeed = 1.0;
+                controls.autoRotateSpeed = 1.0;
+                gui.controllersRecursive().forEach(c => c.updateDisplay());
+            }
+        });
+        folderAnim.open();
 
         // 5. ANIMACIÓN
         function animate() {
@@ -388,7 +488,26 @@
             const time = performance.now() * 0.001;
 
             if (currentMesh) {
-                currentMesh.position.y = Math.sin(time) * 1.5 + 8; // Flotar
+                // Flotación controlada
+                if (animParams.shirtFloatSpeed > 0) {
+                    currentMesh.position.y = Math.sin(time * animParams.shirtFloatSpeed) * 1.5 + 8;
+                } else if (animParams.stopAll) {
+                    // Si está detenido, mantener posición actual o resetear? Mejor dejar quieto.
+                    // Al ser sin(time), 'time' sigue corriendo. Para congelar requeriría offset.
+                    // Simplificación: sigo calculando pero con velocidad 0 se moverá muy lento o nada si es multiplo?
+                    // if floatSpeed es 0, sin(0) = 0. Position será fija en 8.
+                    currentMesh.position.y = 8;
+                }
+
+                // Rotación manual de la camisa
+                if (Math.abs(animParams.shirtRotationSpeed) > 0.01) {
+                    currentMesh.rotation.y += animParams.shirtRotationSpeed * 0.01;
+                }
+            }
+
+            // Actualizar velocidad de cámara en tiempo real (si no está detenido)
+            if (!animParams.stopAll) {
+                controls.autoRotateSpeed = animParams.cameraSpeed;
             }
 
             water.material.uniforms['time'].value += 1.0 / 60.0;
@@ -397,6 +516,8 @@
         }
         animate();
 
+        updateSun();
+
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -404,4 +525,5 @@
         });
     </script>
 </body>
+
 </html>

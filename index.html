@@ -1,74 +1,197 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<title>Skin Pro - Intro</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body { margin: 0; background-color: #000; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-            
-            /* --- ESTILOS DE CARGA --- */
-            #loading {
-                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                color: white; font-size: 24px; pointer-events: none; z-index: 10;
-                text-shadow: 0 0 10px rgba(0,0,0,0.5);
-            }
 
-            /* --- ESTILOS DE LA INTERFAZ (TEXTO Y BOTÓN) --- */
-            #ui-container {
-                position: absolute;
-                bottom: 40px; 
-                left: 50%;
-                transform: translateX(-50%); 
-                text-align: center;
-                z-index: 20; 
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 15px; 
-            }
+<head>
+    <title>Skin Pro - Intro</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        /* CAMBIO: Fondo color "Noche" (Azul muy oscuro) en lugar de negro puro */
+        body {
+            margin: 0;
+            background: radial-gradient(circle at center, #1a2035 0%, #0b1026 100%);
+            /* Degradado noche */
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-            .credits {
-                color: rgba(255, 255, 255, 0.9);
-                font-size: 14px;
-                letter-spacing: 1px;
-                text-transform: uppercase;
-                text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-                font-weight: 600;
-            }
+        /* --- ESTILOS DE CARGA --- */
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
 
-            .btn-continue {
-                background-color: #f37021; 
-                color: white;
-                border: none;
-                padding: 12px 40px;
-                font-size: 18px;
-                font-weight: bold;
-                border-radius: 30px; 
-                cursor: pointer;
-                transition: all 0.3s ease;
-                box-shadow: 0 4px 15px rgba(243, 112, 33, 0.4);
-                text-decoration: none; 
-            }
+        /* --- ESTILOS DE LA INTERFAZ --- */
+        /* Contenedor general para posicionamiento */
+        .ui-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            /* Dejar pasar clicks al 3D si no es un elemento interactivo */
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+            box-sizing: border-box;
+        }
 
-            .btn-continue:hover {
-                background-color: #d15b15; 
-                transform: scale(1.05); 
-                box-shadow: 0 6px 20px rgba(243, 112, 33, 0.6);
-            }
+        /* Botón Continuar (Arriba) */
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            pointer-events: auto;
+        }
 
-		</style>
-	</head>
-	<body>
+        .btn-continue {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 15px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            margin-top: 20px;
+        }
 
-        <div id="loading">Cargando Skin Pro...</div>
+        .btn-continue:hover {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.8) inset;
+            transform: translateY(2px);
+        }
 
-        <div id="ui-container">
-            <div class="credits">Creado por: Martin Betancourt y Fabian Guerrero</div>
-            <button id="btn-next" class="btn-continue">CONTINUAR</button>
+        /* Créditos (Abajo) */
+        .bottom-bar {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+            margin-bottom: 20px;
+        }
+
+        .credits {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 400;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.3), transparent);
+            padding: 10px 30px;
+            border-radius: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .credits span {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* Esquinas */
+        .corner {
+            position: absolute;
+            pointer-events: auto;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .corner:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .top-left {
+            top: 30px;
+            left: 30px;
+        }
+
+        .top-right {
+            top: 30px;
+            right: 30px;
+        }
+
+        .bottom-left {
+            bottom: 30px;
+            left: 30px;
+        }
+
+        .bottom-right {
+            bottom: 30px;
+            right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading">Cargando Experiencia...</div>
+
+    <div class="ui-layer">
+        <div class="top-bar">
+            <button id="btn-next" class="btn-continue">Continuar</button>
         </div>
 
-		<script type="importmap">
+        <!-- ================================================================= -->
+        <!--   ZONA DE LINKS - MODIFICA LOS "href" CON TUS ENLACES REALES      -->
+        <!-- ================================================================= -->
+
+        <!-- 1. Enlace Arriba Izquierda -->
+        <a href="https://instagram.com" class="corner top-left" target="_blank">
+            Instagram <!-- CAMBIAR LINK AQUÍ (href) -->
+        </a>
+
+        <!-- 2. Enlace Arriba Derecha -->
+        <a href="https://facebook.com" class="corner top-right" target="_blank">
+            Facebook <!-- CAMBIAR LINK AQUÍ (href) -->
+        </a>
+
+        <!-- 3. Enlace Abajo Izquierda -->
+        <a href="https://tusitio.com" class="corner bottom-left" target="_blank">
+            Website <!-- CAMBIAR LINK AQUÍ (href) -->
+        </a>
+
+        <!-- 4. Enlace Abajo Derecha -->
+        <a href="mailto:tuemail@ejemplo.com" class="corner bottom-right">
+            Contacto <!-- CAMBIAR LINK AQUÍ (href) -->
+        </a>
+
+        <!-- ================================================================= -->
+
+        <div class="bottom-bar">
+            <div class="credits">Diseñado por <span>Martin Betancourt</span> & <span>Fabian Guerrero</span></div>
+        </div>
+    </div>
+
+    <script type="importmap">
 			{
 				"imports": {
 					"three": "https://unpkg.com/three@0.160.0/build/three.module.js",
@@ -77,133 +200,222 @@
 			}
 		</script>
 
-		<script type="module">
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-			import * as THREE from 'three';
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { Sky } from 'three/addons/objects/Sky.js';
-            import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        let camera, scene, renderer;
+        let logoModel;
+        let auroraMesh;
+        let stars;
 
-			let camera, scene, renderer;
-			let sky, sun;
-            let logoModel;
+        init();
+        animate();
 
-			init();
-            animate();
+        function init() {
+            // Evento para continuar
+            document.getElementById('btn-next').addEventListener('click', function () {
+                window.location.href = "menu.html";
+            });
 
-			function init() {
+            // 1. Scene Setup
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 2, 12);
 
-                // --- AQUÍ ESTÁ EL CAMBIO PARA IR AL MENÚ ---
-                document.getElementById('btn-next').addEventListener('click', function() {
-                    // Redirige al archivo menu.html
-                    window.location.href = "menu.html"; 
+            scene = new THREE.Scene();
+            // CAMBIO: Niebla de color azul noche para coincidir con el fondo CSS
+            scene.fog = new THREE.FogExp2(0x0b1026, 0.02);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            // Hacemos que el fondo de Three.js sea transparente para ver el gradiente CSS
+            renderer.setClearColor(0x000000, 0);
+            document.body.appendChild(renderer.domElement);
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.enablePan = false;
+            controls.minDistance = 5;
+            controls.maxDistance = 30;
+            // Restringir ángulo vertical para que no vean "debajo" del suelo (aunque no hay suelo, se ve mejor)
+            controls.maxPolarAngle = Math.PI / 1.5;
+
+            // Luces
+            const ambientLight = new THREE.AmbientLight(0x404040, 2); // Luz ambiental suave
+            scene.add(ambientLight);
+
+            const spotLight = new THREE.SpotLight(0xffffff, 50);
+            spotLight.position.set(10, 20, 10);
+            spotLight.angle = 0.5;
+            spotLight.penumbra = 1;
+            scene.add(spotLight);
+
+            const purpleLight = new THREE.PointLight(0x8a2be2, 5, 50);
+            purpleLight.position.set(-5, 5, -5);
+            scene.add(purpleLight);
+
+            // --- 2. FONDO: ESTRELLAS & AURORA ---
+            createStars();
+            createAurora();
+
+            // --- 3. LOGO ---
+            const loader = new GLTFLoader();
+            loader.load('./logo.glb', function (gltf) {
+                logoModel = gltf.scene;
+                const box = new THREE.Box3().setFromObject(logoModel);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+
+                // Centrar modelo
+                logoModel.position.x += (logoModel.position.x - center.x);
+                logoModel.position.y += (logoModel.position.y - center.y);
+                logoModel.position.z += (logoModel.position.z - center.z);
+
+                // Escalar
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 7 / maxDim;
+                logoModel.scale.setScalar(scale);
+
+                // Material enhancement
+                logoModel.traverse((child) => {
+                    if (child.isMesh) {
+                        child.material.envMapIntensity = 2.0;
+                        child.material.metalness = 0.8;
+                        child.material.roughness = 0.2;
+                    }
                 });
 
-				// 1. CONFIGURACIÓN DE ESCENA
-				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 20000 );
-				camera.position.set( 0, 0, 15 );
+                scene.add(logoModel);
+                document.getElementById('loading').style.display = 'none';
 
-				scene = new THREE.Scene();
+            }, undefined, function (error) {
+                console.error(error);
+            });
 
-				renderer = new THREE.WebGLRenderer({ antialias: true });
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.toneMapping = THREE.ACESFilmicToneMapping;
-				renderer.toneMappingExposure = 0.5;
-				document.body.appendChild( renderer.domElement );
+            window.addEventListener('resize', onWindowResize);
+        }
 
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.enableDamping = true;
-                controls.enablePan = false; 
-                controls.minDistance = 5;
-                controls.maxDistance = 50;
+        function createStars() {
+            const geometry = new THREE.BufferGeometry();
+            const count = 2000;
+            const positions = new Float32Array(count * 3);
 
-				initSky();
+            for (let i = 0; i < count * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 100;
+            }
 
-                const ambientLight = new THREE.AmbientLight( 0xffffff, 0.8 );
-                scene.add( ambientLight );
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const material = new THREE.PointsMaterial({
+                size: 0.1,
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.8
+            });
 
-                const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
-                dirLight.position.set( -10, 10, -10 );
-                scene.add( dirLight );
+            stars = new THREE.Points(geometry, material);
+            scene.add(stars);
+        }
 
-                // Carga del Logo
-                const loader = new GLTFLoader();
-                loader.load( './logo.glb', function ( gltf ) {
-                    logoModel = gltf.scene;
-                    const box = new THREE.Box3().setFromObject( logoModel );
-                    const center = box.getCenter( new THREE.Vector3() );
-                    const size = box.getSize( new THREE.Vector3() );
+        function createAurora() {
+            // Shader simple para aurora
+            const vertexShader = `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `;
 
-                    logoModel.position.x += ( logoModel.position.x - center.x );
-                    logoModel.position.y += ( logoModel.position.y - center.y );
-                    logoModel.position.z += ( logoModel.position.z - center.z );
+            const fragmentShader = `
+                    uniform float time;
+                    varying vec2 vUv;
 
-                    const maxDim = Math.max(size.x, size.y, size.z);
-                    const scale = 8 / maxDim; 
-                    logoModel.scale.setScalar(scale);
+                    void main() {
+                        vec2 uv = vUv;
+                        
+                        // Crear ondas sinusoides
+                        // Hacemos las ondas más suaves y largas para el cilindro grande
+                        float wave1 = sin(uv.x * 20.0 + time * 0.5) * 0.1;
+                        float wave2 = sin(uv.x * 35.0 - time * 0.3) * 0.05;
+                        float wave3 = sin(uv.x * 10.0 + time * 0.8) * 0.08; 
+                        
+                        // Perturbación vertical
+                        float line = abs(uv.y - 0.5 + wave1 + wave2 + wave3);
+                        
+                        // Glow más intenso y difuso
+                        float glow = 0.04 / line; 
 
-                    logoModel.traverse((child) => {
-                        if (child.isMesh) {
-                            child.material.envMapIntensity = 1.5; 
-                        }
-                    });
+                        // Color degradado estilo aurora (Verde -> Azul -> Purpura)
+                        // Ajustamos colores para que se vea más místico
+                        vec3 color1 = vec3(0.0, 1.0, 0.6); // Verde brillante
+                        vec3 color2 = vec3(0.6, 0.0, 1.0); // Purpura neón
+                        
+                        vec3 finalColor = mix(color1, color2, uv.x + sin(time * 0.5));
+                        
+                        // Desvanecer bordes superior e inferior para que no se vea el "corte" del cilindro
+                        float fade = smoothstep(0.0, 0.2, uv.y) * smoothstep(1.0, 0.8, uv.y);
+                        
+                        gl_FragColor = vec4(finalColor * glow, glow * 0.6 * fade); 
+                    }
+                `;
 
-                    scene.add( logoModel );
-                    document.getElementById('loading').style.display = 'none';
+            // --- CAMBIO: GEOMETRÍA CILÍNDRICA "INFINITA" (360 Grados) ---
+            // Usamos un cilindro abierto que rodea la escena COMPLETAMENTE
+            // Radio superior, Radio inferior, Altura, Segmentos radiales, Segmentos altura, Abierto (sin tapas)
+            // Al quitar los últimos argumentos, por defecto hace el círculo completo (2 * PI)
+            const geometry = new THREE.CylinderGeometry(60, 60, 40, 64, 1, true);
+            // Giramos e invertimos para que mire hacia adentro (BackSide lo maneja, pero la geo ayuda)
 
-                }, undefined, function ( error ) {
-                    console.error( error );
-                    document.getElementById('loading').innerText = 'Error: logo.glb no encontrado';
-                    document.getElementById('loading').style.color = '#ff3333';
-                } );
+            const material = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader,
+                side: THREE.DoubleSide, // Ver ambos lados
+                transparent: true,
+                depthWrite: false, // No escribir en buffer de profundidad para que las estrellas se vean detrás
+                blending: THREE.AdditiveBlending
+            });
 
-				window.addEventListener( 'resize', onWindowResize );
-			}
+            auroraMesh = new THREE.Mesh(geometry, material);
+            // Posicionar para que envuelva la cámara y el modelo
+            auroraMesh.position.set(0, 5, 0);
+            auroraMesh.rotation.y = Math.PI / 2; // Orientar la apertura hacia atrás de la cámara si es necesario
+            scene.add(auroraMesh);
+        }
 
-			function initSky() {
-				sky = new Sky();
-				sky.scale.setScalar( 450000 );
-				scene.add( sky );
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
 
-				sun = new THREE.Vector3();
+        function animate() {
+            requestAnimationFrame(animate);
 
-				const effectController = {
-					turbidity: 10,
-					rayleigh: 3,
-					mieCoefficient: 0.005,
-					mieDirectionalG: 0.7,
-					elevation: 2,   
-					azimuth: 180,
-					exposure: renderer.toneMappingExposure
-				};
+            const time = performance.now() * 0.001;
 
-				const uniforms = sky.material.uniforms;
-				uniforms[ 'turbidity' ].value = effectController.turbidity;
-				uniforms[ 'rayleigh' ].value = effectController.rayleigh;
-				uniforms[ 'mieCoefficient' ].value = effectController.mieCoefficient;
-				uniforms[ 'mieDirectionalG' ].value = effectController.mieDirectionalG;
+            if (logoModel) {
+                logoModel.rotation.y = Math.sin(time * 0.5) * 0.2; // Rotación suave oscilante
+                logoModel.position.y = Math.sin(time) * 0.1; // Flotar suave
+            }
 
-				const phi = THREE.MathUtils.degToRad( 90 - effectController.elevation );
-				const theta = THREE.MathUtils.degToRad( effectController.azimuth );
-				sun.setFromSphericalCoords( 1, phi, theta );
-				uniforms[ 'sunPosition' ].value.copy( sun );
-			}
+            if (auroraMesh) {
+                auroraMesh.material.uniforms.time.value = time;
+            }
 
-			function onWindowResize() {
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-			}
+            if (stars) {
+                stars.rotation.y = time * 0.02; // Rotación lenta de estrellas
+            }
 
-			function animate() {
-                requestAnimationFrame( animate );
-                if ( logoModel ) {
-                    logoModel.rotation.y += 0.005; 
-                }
-				renderer.render( scene, camera );
-			}
+            renderer.render(scene, camera);
+        }
 
-		</script>
-	</body>
+    </script>
+</body>
+
 </html>
